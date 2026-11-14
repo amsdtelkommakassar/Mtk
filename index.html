@@ -1,0 +1,2653 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Hubungan Antarsatuan Panjang - Petualangan Bangjack (Matematika Kelas IV)</title>
+    <style>
+      :root {
+        --ink: #1f2a44;
+        --sun: #ffc43d;
+        --red: #e5484d;
+        --blue: #2f6fed;
+        --green: #2e9e48;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+      }
+      body {
+        font-family: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+        font-size: 18px;
+        line-height: 1.5;
+        color: var(--ink);
+        min-height: 100vh;
+        background: linear-gradient(#8fd3f4, #d9f3ff 45%, #fff6d6 72%, #b9e5a0)
+          fixed;
+      }
+      .hud {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background: #1f4fbf;
+        color: #fff;
+        border-bottom: 4px solid var(--sun);
+      }
+      .hud > div {
+        max-width: 880px;
+        margin: auto;
+        padding: 8px 12px;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      .hud b {
+        font-size: 1rem;
+      }
+      .chip {
+        background: #fff;
+        color: var(--ink);
+        border-radius: 99px;
+        padding: 3px 11px;
+        font-weight: 800;
+        font-size: 0.85rem;
+        white-space: nowrap;
+        display: inline-block;
+      }
+      .pbar {
+        height: 9px;
+        background: #163a8c;
+      }
+      .pbar i {
+        display: block;
+        height: 100%;
+        background: var(--sun);
+        transition: width 0.5s;
+      }
+      main {
+        max-width: 880px;
+        margin: auto;
+        padding: 14px 12px 60px;
+      }
+      .pg {
+        animation: slide 0.38s ease-out;
+      }
+      @keyframes slide {
+        from {
+          opacity: 0;
+          transform: translateX(34px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .card {
+        background: #fff;
+        border-radius: 24px;
+        padding: 16px;
+        margin-bottom: 14px;
+        border: 3px solid #fff;
+        box-shadow: 0 5px 0 rgba(31, 42, 68, 0.14);
+      }
+      .c {
+        text-align: center;
+      }
+      h1 {
+        font-size: 2rem;
+        margin: 0.1em 0;
+        line-height: 1.15;
+      }
+      h2 {
+        font-size: 1.35rem;
+        margin: 0.2em 0 0.4em;
+        line-height: 1.25;
+      }
+      h3 {
+        font-size: 1.05rem;
+        margin: 0.2em 0;
+      }
+      .meta {
+        font-size: 0.85rem;
+        color: #5b6784;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+      .btn {
+        font: inherit;
+        font-weight: 800;
+        border: 0;
+        border-radius: 16px;
+        padding: 12px 18px;
+        min-height: 48px;
+        cursor: pointer;
+        box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+        transition: transform 0.1s;
+        margin: 4px 4px 4px 0;
+      }
+      .btn:hover:not(:disabled) {
+        transform: translateY(-2px);
+      }
+      .btn:active:not(:disabled) {
+        transform: translateY(3px);
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+      }
+      .btn:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+      .go {
+        background: var(--green);
+        color: #fff;
+      }
+      .ghost {
+        background: #e2e8f0;
+        color: var(--ink);
+      }
+      .warn {
+        background: var(--sun);
+        color: var(--ink);
+      }
+      .red {
+        background: var(--red);
+        color: #fff;
+      }
+      .big {
+        font-size: 1.2rem;
+        padding: 16px 22px;
+      }
+      :focus-visible {
+        outline: 4px solid #f97316;
+        outline-offset: 2px;
+      }
+      .say {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        margin: 10px 0;
+      }
+      .bub {
+        background: #eef6ff;
+        border-radius: 6px 20px 20px 20px;
+        padding: 8px 14px;
+        flex: 1;
+        border: 2px solid #cfe2ff;
+      }
+      .bub b {
+        font-size: 0.8rem;
+        color: var(--blue);
+        display: block;
+      }
+      .bub p {
+        margin: 0;
+      }
+      .jk {
+        flex-shrink: 0;
+        animation: bob 2.4s ease-in-out infinite;
+      }
+      @keyframes bob {
+        50% {
+          transform: translateY(-4px);
+        }
+      }
+      .ill {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 18px;
+        border: 3px solid #dbeafe;
+        margin: 8px 0;
+      }
+      .tile {
+        border-radius: 16px;
+        padding: 10px 12px;
+        background: #f1f7ff;
+        border: 2px solid #cfe2ff;
+        margin: 8px 0;
+      }
+      .opt {
+        display: flex;
+        gap: 10px;
+        width: 100%;
+        text-align: left;
+        font: inherit;
+        background: #fff;
+        border: 3px solid #cbd5e1;
+        border-radius: 16px;
+        padding: 10px 14px;
+        margin: 8px 0;
+        cursor: pointer;
+        min-height: 50px;
+        align-items: center;
+        transition:
+          transform 0.12s,
+          border-color 0.12s;
+      }
+      .opt b {
+        background: #e2e8f0;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: grid;
+        place-items: center;
+        flex-shrink: 0;
+      }
+      .opt:hover:not(:disabled) {
+        border-color: var(--blue);
+        transform: translateX(4px);
+      }
+      .opt.ok {
+        background: #dcfce7;
+        border-color: var(--green);
+        animation: pop 0.5s;
+      }
+      .opt.bad {
+        background: #fee2e2;
+        border-color: #dc2626;
+        animation: shake 0.4s;
+      }
+      .fb {
+        border-radius: 14px;
+        padding: 8px 12px;
+        margin: 8px 0;
+        font-size: 0.95rem;
+      }
+      .fb.ok {
+        background: #dcfce7;
+      }
+      .fb.bad {
+        background: #fee2e2;
+      }
+      .fb.info {
+        background: #fef9c3;
+      }
+      @keyframes pop {
+        40% {
+          transform: scale(1.04);
+        }
+      }
+      @keyframes shake {
+        25% {
+          transform: translateX(-6px);
+        }
+        75% {
+          transform: translateX(6px);
+        }
+      }
+      .dots {
+        display: flex;
+        gap: 6px;
+        margin: 6px 0;
+      }
+      .dots i {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #e2e8f0;
+        border: 2px solid #cbd5e1;
+      }
+      .dots i.d {
+        background: var(--green);
+        border-color: var(--green);
+      }
+      .dots i.x {
+        background: var(--red);
+        border-color: var(--red);
+      }
+      .dots i.n {
+        border-color: var(--blue);
+        transform: scale(1.25);
+      }
+      input,
+      select {
+        font: inherit;
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 3px solid #cbd5e1;
+        max-width: 100%;
+        background: #fff;
+        width: 100%;
+      }
+      label {
+        font-weight: 800;
+        display: block;
+        margin-top: 10px;
+      }
+      .row {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .grid {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+      .map {
+        position: relative;
+        max-width: 420px;
+        margin: auto;
+      }
+      .map svg {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 26px;
+        border: 4px solid #fff;
+        box-shadow: 0 5px 0 rgba(31, 42, 68, 0.14);
+      }
+      .node {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        width: 74px;
+        height: 74px;
+        border-radius: 50%;
+        border: 5px solid #fff;
+        background: var(--sun);
+        font-size: 30px;
+        cursor: pointer;
+        box-shadow: 0 4px 0 rgba(0, 0, 0, 0.25);
+        animation: bob 2.6s ease-in-out infinite;
+        padding: 0;
+      }
+      .node.dn {
+        background: var(--green);
+      }
+      .node.lk {
+        filter: grayscale(1);
+        opacity: 0.65;
+        cursor: not-allowed;
+        animation: none;
+      }
+      .nl {
+        position: absolute;
+        transform: translate(-50%, 0);
+        font-size: 0.78rem;
+        font-weight: 800;
+        text-align: center;
+        background: #fff;
+        border-radius: 10px;
+        padding: 1px 8px;
+        white-space: nowrap;
+      }
+      .mj {
+        position: absolute;
+        pointer-events: none;
+      }
+      .bigsc {
+        font-size: 3rem;
+        font-weight: 900;
+        line-height: 1;
+      }
+      .stars {
+        font-size: 2.2rem;
+        letter-spacing: 4px;
+      }
+      .badge {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100px;
+        padding: 8px;
+        margin: 4px;
+        border-radius: 16px;
+        background: #fef3c7;
+        font-size: 0.78rem;
+        text-align: center;
+        font-weight: 800;
+      }
+      .badge span {
+        font-size: 1.9rem;
+      }
+      .badge.off {
+        filter: grayscale(1);
+        opacity: 0.45;
+      }
+      .wrap {
+        overflow-x: auto;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 0.9rem;
+      }
+      th,
+      td {
+        border: 2px solid #cbd5e1;
+        padding: 6px 8px;
+        text-align: left;
+        vertical-align: middle;
+      }
+      th {
+        background: var(--blue);
+        color: #fff;
+      }
+      .pb2 {
+        height: 12px;
+        background: #e2e8f0;
+        border-radius: 99px;
+        overflow: hidden;
+        min-width: 70px;
+      }
+      .pb2 i {
+        display: block;
+        height: 100%;
+        background: var(--green);
+      }
+      .fx {
+        position: fixed;
+        top: -30px;
+        font-size: 28px;
+        pointer-events: none;
+        animation: fall 1.9s ease-in forwards;
+        z-index: 99;
+      }
+      @keyframes fall {
+        to {
+          transform: translateY(110vh) rotate(360deg);
+        }
+      }
+      .plus {
+        position: fixed;
+        left: 50%;
+        top: 34%;
+        transform: translateX(-50%);
+        font-size: 2.6rem;
+        font-weight: 900;
+        color: #16a34a;
+        text-shadow:
+          0 2px 0 #fff,
+          0 0 12px #fff;
+        animation: rise 1.2s ease-out forwards;
+        pointer-events: none;
+        z-index: 99;
+      }
+      @keyframes rise {
+        to {
+          transform: translate(-50%, -90px);
+          opacity: 0;
+        }
+      }
+      .sc.pp {
+        animation: pop 0.5s;
+      }
+      details {
+        margin: 10px 0;
+        font-size: 0.9rem;
+      }
+      pre {
+        background: #0f172a;
+        color: #e2e8f0;
+        padding: 10px;
+        border-radius: 10px;
+        overflow-x: auto;
+        font-size: 0.78rem;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation: none !important;
+          transition: none !important;
+        }
+      }
+      @media (max-width: 480px) {
+        body {
+          font-size: 17px;
+        }
+        h1 {
+          font-size: 1.6rem;
+        }
+        .btn {
+          padding: 10px 14px;
+        }
+      }
+
+      /* ===== BERANDA BARU ===== */
+      .hero {
+        padding: 0;
+        overflow: hidden;
+        position: relative;
+        background: linear-gradient(#8fd3f4 0%, #d9f3ff 62%, #fff6d6 88%);
+        border-color: #fff;
+      }
+      .hero-top {
+        padding: 16px 12px 0;
+        position: relative;
+        z-index: 2;
+      }
+      .logo {
+        display: block;
+        margin: 0 auto 10px;
+        width: min(250px, 72%);
+        height: auto;
+        background: #fff;
+        border-radius: 18px;
+        padding: 6px 10px;
+        border: 3px solid #e3ebfb;
+        box-shadow: 0 4px 0 rgba(31, 42, 68, 0.16);
+      }
+      .kick {
+        display: inline-block;
+        background: var(--sun);
+        border-radius: 99px;
+        padding: 3px 14px;
+        font-weight: 900;
+        font-size: 0.82rem;
+        letter-spacing: 0.04em;
+        box-shadow: 0 3px 0 rgba(0, 0, 0, 0.15);
+      }
+      .ttl {
+        font-size: clamp(1.5rem, 6.6vw, 2.6rem);
+        font-weight: 900;
+        line-height: 1.1;
+        margin: 10px 0 4px;
+        color: #1f4fbf;
+        text-shadow:
+          0 3px 0 #fff,
+          0 5px 0 rgba(31, 42, 68, 0.18);
+        letter-spacing: 0.01em;
+      }
+      .ttl em {
+        font-style: normal;
+        color: #e5484d;
+        display: block;
+      }
+      .sub {
+        margin: 0;
+        font-weight: 800;
+        color: #1f2a44;
+      }
+      .scene {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin-top: -4px;
+        position: relative;
+        z-index: 1;
+      }
+      .nt {
+        position: absolute;
+        bottom: 70px;
+        font-size: 1.7rem;
+        opacity: 0;
+        animation: nrise 6s ease-in infinite;
+        pointer-events: none;
+        z-index: 3;
+      }
+      @keyframes nrise {
+        0% {
+          transform: translateY(0) rotate(-10deg);
+          opacity: 0;
+        }
+        15% {
+          opacity: 0.95;
+        }
+        100% {
+          transform: translateY(-200px) rotate(16deg);
+          opacity: 0;
+        }
+      }
+      .cl {
+        animation: drift 14s ease-in-out infinite alternate;
+      }
+      @keyframes drift {
+        to {
+          transform: translateX(36px);
+        }
+      }
+      .spin {
+        transform-box: fill-box;
+        transform-origin: center;
+        animation: spn 18s linear infinite;
+      }
+      @keyframes spn {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .wave {
+        transform-box: fill-box;
+        transform-origin: 0 50%;
+        animation: wv 1.3s ease-in-out infinite;
+      }
+      @keyframes wv {
+        50% {
+          transform: scaleX(0.8) skewY(6deg);
+        }
+      }
+      .beat {
+        transform-box: fill-box;
+        transform-origin: 50% 0;
+        animation: bt 1.15s ease-in-out infinite;
+      }
+      @keyframes bt {
+        50% {
+          transform: rotate(5deg);
+        }
+      }
+      .beat2 {
+        transform-box: fill-box;
+        transform-origin: 50% 100%;
+        animation: bp 0.58s ease-in-out infinite;
+      }
+      @keyframes bp {
+        50% {
+          transform: scale(1.07, 0.93);
+        }
+      }
+      .shk {
+        transform-box: fill-box;
+        transform-origin: 50% 100%;
+        animation: shk 0.45s ease-in-out infinite;
+      }
+      @keyframes shk {
+        25% {
+          transform: rotate(-7deg);
+        }
+        75% {
+          transform: rotate(7deg);
+        }
+      }
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        justify-content: center;
+        margin: 10px 0 2px;
+      }
+      .chip2 {
+        background: #fff;
+        border: 2px solid #cfe2ff;
+        border-radius: 99px;
+        padding: 3px 12px;
+        font-weight: 800;
+        font-size: 0.85rem;
+      }
+      .vid {
+        position: relative;
+        padding-top: 56.25%;
+        border-radius: 18px;
+        overflow: hidden;
+        border: 4px solid #1f4fbf;
+        background: #0f172a;
+        margin: 8px 0;
+      }
+      .vid iframe {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+      .steps {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .steps li {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        background: #f1f7ff;
+        border: 2px solid #cfe2ff;
+        border-radius: 16px;
+        padding: 8px 12px;
+        margin: 8px 0;
+      }
+      .steps .n {
+        flex: 0 0 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--blue);
+        color: #fff;
+        font-weight: 900;
+        display: grid;
+        place-items: center;
+        box-shadow: 0 3px 0 rgba(0, 0, 0, 0.2);
+      }
+      .steps .e {
+        font-size: 1.5rem;
+        line-height: 1.25;
+      }
+      .steps p {
+        margin: 0;
+        font-size: 0.95rem;
+      }
+      .mbtn {
+        position: fixed;
+        right: 12px;
+        bottom: 12px;
+        z-index: 30;
+        border-radius: 99px;
+        padding: 10px 16px;
+        font-size: 0.95rem;
+        margin: 0;
+      }
+      .mbtn.pulse {
+        animation: pls 1.6s ease-in-out infinite;
+      }
+      @keyframes pls {
+        50% {
+          transform: scale(1.08);
+        }
+      }
+      @media (max-width: 480px) {
+        .nt {
+          font-size: 1.3rem;
+        }
+        .steps .e {
+          font-size: 1.3rem;
+        }
+      }
+      .modal{position:fixed;inset:0;z-index:60;background:rgba(15,23,42,.78);display:grid;place-items:center;padding:12px}
+      .mbox{width:min(760px,100%);background:#fff;border-radius:20px;padding:12px}
+      .mh{display:flex;justify-content:space-between;align-items:center;gap:8px}
+    </style>
+  </head>
+  <body>
+    <div id="hud"></div>
+    <main id="app"></main>
+    <button
+      id="mbtn"
+      class="btn warn mbtn pulse"
+      onclick="MUS.toggle()"
+      aria-pressed="false"
+    >
+      🎵 Putar Musik
+    </button>
+    <script>
+      "use strict";
+      /* ==========================================================================
+   KONFIGURASI
+   Supabase: isi projectUrl dan publishableKey di bawah.
+   Gunakan publishable key saja. Jangan pernah menaruh sb_secret/service_role di HTML.
+   ========================================================================== */
+      const CFG = {
+        supabase: {
+          table: "hasil_kuis", // ganti jika memakai tabel Supabase lain untuk MTK
+          projectUrl: "https://qhmbtwlublxofbcwfepc.supabase.co",
+          publishableKey: "sb_publishable_czskFOfbRvZbsCXaPQ_GNQ_PXwb2Zxm",
+        },
+      };
+      const $ = (s) => document.querySelector(s);
+      const esc = (s) =>
+        String(s).replace(
+          /[&<>"']/g,
+          (c) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            })[c],
+        );
+      const h53 = (s) => {
+        let a = 0xdeadbeef,
+          b = 0x41c6ce57;
+        for (let i = 0; i < s.length; i++) {
+          const c = s.charCodeAt(i);
+          a = Math.imul(a ^ c, 2654435761);
+          b = Math.imul(b ^ c, 1597334677);
+        }
+        a = Math.imul(a ^ (a >>> 16), 2246822507);
+        a ^= Math.imul(b ^ (b >>> 13), 3266489909);
+        b = Math.imul(b ^ (b >>> 16), 2246822507);
+        b ^= Math.imul(a ^ (a >>> 13), 3266489909);
+        return (4294967296 * (2097151 & b) + (a >>> 0)).toString(36);
+      };
+      const pick = (a) => a[Math.floor(Math.random() * a.length)];
+      const fm = (n) => String(Math.round(n * 10) / 10).replace(".", ",");
+
+      /* ===== PENYIMPANAN SUPABASE ===== */
+      function lsGet() {
+        try {
+          return JSON.parse(localStorage.getItem("mtk_hasil") || "{}");
+        } catch (e) {
+          return {};
+        }
+      }
+      function lsSet(r) {
+        try {
+          const o = lsGet();
+          o[r.k] = r;
+          localStorage.setItem("mtk_hasil", JSON.stringify(o));
+        } catch (e) {}
+      }
+      const DB = {
+        sb: null,
+        note: "",
+        un: null,
+        uid: null,
+        async init() {
+          const c = CFG.supabase;
+          if (
+            !c.projectUrl ||
+            c.projectUrl.includes("ISI_PROJECT_URL") ||
+            !c.publishableKey
+          ) {
+            DB.note =
+              "Isi Project URL Supabase pada CFG.supabase agar data tersimpan online.";
+            return;
+          }
+          try {
+            await new Promise((ok, no) => {
+              const s = document.createElement("script");
+              s.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+              s.onload = ok;
+              s.onerror = no;
+              document.head.appendChild(s);
+            });
+            DB.sb = window.supabase.createClient(
+              c.projectUrl,
+              c.publishableKey,
+            );
+          } catch (e) {
+            DB.note = "Supabase gagal dimuat. Periksa koneksi dan konfigurasi.";
+          }
+        },
+        async anon() {
+          const { data, error } = await DB.sb.auth.getSession();
+          if (error) throw error;
+          let u = data.session?.user;
+          if (!u || !u.is_anonymous) {
+            const r = await DB.sb.auth.signInAnonymously();
+            if (r.error) throw r.error;
+            u = r.data.user;
+          }
+          return u.id;
+        },
+        async put(r) {
+          lsSet(r);
+
+          if (!DB.sb || !DB.uid) {
+            console.warn(
+              "Supabase belum terhubung atau UID siswa belum tersedia.",
+            );
+            return false;
+          }
+
+          const row = {
+            user_id: DB.uid,
+            nama_siswa: r.nama,
+            kelas: r.kode,
+            nilai: r.nilai,
+            skor: r.skor,
+            maks: r.maks,
+            benar: r.benar,
+            salah: r.salah,
+            jawab: r.jawab,
+            prog: r.prog,
+            status: r.status,
+            detail_jawaban: r.det,
+            created_at: r.t,
+          };
+
+          const { error } = await DB.sb
+            .from(CFG.supabase.table)
+            .upsert(row, { onConflict: "user_id" });
+
+          if (error) {
+            console.error("Gagal menyimpan hasil siswa:", error);
+            return false;
+          }
+
+          console.log("Hasil siswa berhasil disimpan ke Supabase.");
+          return true;
+        },
+        async watch(ok, no) {
+          DB.stop();
+          const load = async () => {
+            const { data, error } = await DB.sb
+              .from(CFG.supabase.table)
+              .select(
+                "user_id,nama_siswa,kelas,nilai,skor,maks,benar,salah,jawab,prog,status,detail_jawaban,created_at",
+              )
+              .order("created_at", { ascending: false });
+            if (error) throw error;
+            ok(
+              (data || []).map((x) => ({
+                k: x.user_id,
+                nama: x.nama_siswa,
+                kode: x.kelas,
+                nilai: Number(x.nilai || 0),
+                skor: Number(x.skor || 0),
+                maks: Number(x.maks || 0),
+                benar: Number(x.benar || 0),
+                salah: Number(x.salah || 0),
+                jawab: Number(x.jawab || 0),
+                prog: Number(x.prog || 0),
+                status: x.status || "Baru masuk",
+                det: x.detail_jawaban || {},
+                t: x.created_at,
+              })),
+            );
+          };
+          try {
+            await load();
+            DB.un = DB.sb
+              .channel("hasil-kuis-live")
+              .on(
+                "postgres_changes",
+                { event: "*", schema: "public", table: CFG.supabase.table },
+                load,
+              )
+              .subscribe();
+          } catch (e) {
+            no(e);
+          }
+        },
+        stop() {
+          if (DB.un && DB.sb) {
+            DB.sb.removeChannel(DB.un);
+            DB.un = null;
+          }
+        },
+        async list() {
+          if (DB.sb) {
+            const { data, error } = await DB.sb
+              .from(CFG.supabase.table)
+              .select(
+                "user_id,nama_siswa,kelas,nilai,skor,maks,benar,salah,jawab,prog,status,detail_jawaban,created_at",
+              )
+              .order("created_at", { ascending: false });
+            if (error) throw error;
+            return (data || []).map((x) => ({
+              k: x.user_id,
+              nama: x.nama_siswa,
+              kode: x.kelas,
+              nilai: Number(x.nilai || 0),
+              skor: Number(x.skor || 0),
+              maks: Number(x.maks || 0),
+              benar: Number(x.benar || 0),
+              salah: Number(x.salah || 0),
+              jawab: Number(x.jawab || 0),
+              prog: Number(x.prog || 0),
+              status: x.status || "Baru masuk",
+              det: x.detail_jawaban || {},
+              t: x.created_at,
+            }));
+          }
+          return Object.values(lsGet());
+        },
+        async clear() {
+          if (!DB.sb) {
+            localStorage.removeItem("mtk_hasil");
+            return;
+          }
+          const { data, error } = await DB.sb
+            .from(CFG.supabase.table)
+            .select("user_id");
+          if (error) throw error;
+          for (const x of data || []) {
+            const r = await DB.sb
+              .from(CFG.supabase.table)
+              .delete()
+              .eq("user_id", x.user_id);
+            if (r.error) throw r.error;
+          }
+        },
+      };
+
+      /* ===== KARAKTER: BANGJACK (satu-satunya karakter) ===== */
+      function jackG(e) {
+        const sk = "#f2b27a",
+          st =
+            'stroke="' +
+            sk +
+            '" stroke-width="8" stroke-linecap="round" fill="none"';
+        let aL = '<path d="M32 80Q18 94 24 104" ' + st + "/>",
+          aR = '<path d="M68 80Q82 94 76 104" ' + st + "/>",
+          x = "",
+          eyes,
+          mouth;
+        if (e === "semangat") {
+          aR =
+            '<path d="M68 80Q90 66 84 46" ' +
+            st +
+            '/><circle cx="84" cy="41" r="7" fill="' +
+            sk +
+            '"/>';
+        }
+        if (e === "pikir") {
+          aR =
+            '<path d="M68 82Q80 90 62 68" ' +
+            st +
+            '/><circle cx="60" cy="66" r="6" fill="' +
+            sk +
+            '"/>';
+          x =
+            '<text x="76" y="20" font-size="22" font-weight="900" fill="#2f6fed">?</text>';
+        }
+        if (e === "kaget") {
+          aL =
+            '<path d="M32 80Q12 72 14 52" ' +
+            st +
+            '/><circle cx="14" cy="48" r="7" fill="' +
+            sk +
+            '"/>';
+          aR =
+            '<path d="M68 80Q88 72 86 52" ' +
+            st +
+            '/><circle cx="86" cy="48" r="7" fill="' +
+            sk +
+            '"/>';
+          x =
+            '<text x="44" y="12" font-size="22" font-weight="900" fill="#e5484d">!</text>';
+        }
+        eyes =
+          e === "senang"
+            ? '<path d="M36 48Q41 42 46 48M54 48Q59 42 64 48" stroke="#1f2a44" stroke-width="3" fill="none" stroke-linecap="round"/>'
+            : e === "kaget"
+              ? '<circle cx="41" cy="48" r="6" fill="#fff" stroke="#1f2a44" stroke-width="2"/><circle cx="59" cy="48" r="6" fill="#fff" stroke="#1f2a44" stroke-width="2"/><circle cx="41" cy="48" r="2.5" fill="#1f2a44"/><circle cx="59" cy="48" r="2.5" fill="#1f2a44"/>'
+              : '<circle cx="41" cy="48" r="3.5" fill="#1f2a44"/><circle cx="59" cy="48" r="3.5" fill="#1f2a44"/>' +
+                (e === "pikir"
+                  ? '<path d="M54 39L65 36" stroke="#1f2a44" stroke-width="3" stroke-linecap="round"/>'
+                  : "");
+        mouth =
+          e === "kaget"
+            ? '<ellipse cx="50" cy="62" rx="4.5" ry="6" fill="#7f1d1d"/>'
+            : e === "pikir"
+              ? '<path d="M43 61Q50 58 57 62" stroke="#7f1d1d" stroke-width="3" fill="none" stroke-linecap="round"/>'
+              : e === "semangat"
+                ? '<path d="M40 56Q50 72 60 56Z" fill="#7f1d1d"/>'
+                : '<path d="M42 57Q50 66 58 57" stroke="#7f1d1d" stroke-width="3" fill="none" stroke-linecap="round"/>';
+        return (
+          x +
+          aL +
+          aR +
+          '<rect x="30" y="72" width="40" height="36" rx="10" fill="#2f6fed"/><rect x="46" y="72" width="8" height="36" fill="#fff"/><rect x="35" y="106" width="11" height="12" rx="3" fill="#1f2a44"/><rect x="54" y="106" width="11" height="12" rx="3" fill="#1f2a44"/><circle cx="24" cy="50" r="5" fill="' +
+          sk +
+          '"/><circle cx="76" cy="50" r="5" fill="' +
+          sk +
+          '"/><circle cx="50" cy="48" r="26" fill="' +
+          sk +
+          '"/><path d="M25 38L25 24Q50 10 75 24L75 38Q50 30 25 38Z" fill="#1f2937"/><rect x="25" y="33" width="50" height="4" fill="#fbbf24"/><circle cx="34" cy="58" r="4" fill="#f9a8a8" opacity=".7"/><circle cx="66" cy="58" r="4" fill="#f9a8a8" opacity=".7"/>' +
+          eyes +
+          mouth
+        );
+      }
+      const jack = (e, w) =>
+        '<svg class="jk" viewBox="0 0 100 120" width="' +
+        w +
+        '" height="' +
+        Math.round(w * 1.2) +
+        '" role="img" aria-label="Bangjack">' +
+        jackG(e) +
+        "</svg>";
+      const bub = (e, t) =>
+        '<div class="say">' +
+        jack(e, 64) +
+        '<div class="bub"><b>Bangjack</b><p>' +
+        t +
+        "</p></div></div>";
+
+      /* ===== ILUSTRASI SVG ===== */
+      const SK = ["#f2b27a", "#c98b5a", "#e0a070", "#8d5a3b"];
+      const P = (x, y, c, k, ex) =>
+        '<circle cx="' +
+        x +
+        '" cy="' +
+        (y - 27) +
+        '" r="6" fill="' +
+        SK[k % 4] +
+        '"/><path d="M' +
+        (x - 6) +
+        " " +
+        (y - 28) +
+        "A6 6 0 0 1 " +
+        (x + 6) +
+        " " +
+        (y - 28) +
+        'Z" fill="#2b2118"/><rect x="' +
+        (x - 6) +
+        '" y="' +
+        (y - 20) +
+        '" width="12" height="14" rx="4" fill="' +
+        c +
+        '"/><rect x="' +
+        (x - 5) +
+        '" y="' +
+        (y - 7) +
+        '" width="4" height="7" fill="#334155"/><rect x="' +
+        (x + 1) +
+        '" y="' +
+        (y - 7) +
+        '" width="4" height="7" fill="#334155"/>' +
+        (ex || "");
+      const H = (x, y, c, s) =>
+        '<g transform="translate(' +
+        x +
+        "," +
+        y +
+        ") scale(" +
+        (s || 1) +
+        ')"><rect y="-26" width="40" height="26" fill="' +
+        c +
+        '"/><polygon points="-4,-26 20,-44 44,-26" fill="#c2410c"/><rect x="16" y="-16" width="8" height="16" fill="#7c3f1d"/><rect x="4" y="-21" width="8" height="8" fill="#bfe9ff"/><rect x="28" y="-21" width="8" height="8" fill="#bfe9ff"/></g>';
+      const T = (x, y, t, s, c) =>
+        '<text x="' +
+        x +
+        '" y="' +
+        y +
+        '" font-size="' +
+        (s || 11) +
+        '" font-weight="800" text-anchor="middle" fill="' +
+        (c || "#1f2a44") +
+        '">' +
+        t +
+        "</text>";
+      const FG = (x, y) =>
+        '<rect x="' +
+        x +
+        '" y="' +
+        (y - 26) +
+        '" width="2" height="26" fill="#64748b"/><rect x="' +
+        (x + 2) +
+        '" y="' +
+        (y - 26) +
+        '" width="14" height="5" fill="#dc2626"/><rect x="' +
+        (x + 2) +
+        '" y="' +
+        (y - 21) +
+        '" width="14" height="5" fill="#fff" stroke="#cbd5e1" stroke-width=".5"/>';
+      const ill = (alt, body, night) =>
+        '<svg class="ill" viewBox="0 0 300 150" role="img" aria-label="' +
+        alt +
+        '"><rect width="300" height="150" fill="' +
+        (night ? "#1e2a5a" : "#bfe9ff") +
+        '"/>' +
+        (night
+          ? '<circle cx="250" cy="28" r="14" fill="#fef3c7"/><circle cx="40" cy="20" r="1.5" fill="#fff"/><circle cx="120" cy="34" r="1.5" fill="#fff"/><circle cx="190" cy="16" r="1.5" fill="#fff"/>'
+          : '<circle cx="262" cy="30" r="16" fill="#ffd54a"/><ellipse cx="70" cy="30" rx="26" ry="9" fill="#fff"/><ellipse cx="92" cy="25" rx="18" ry="8" fill="#fff"/>') +
+        '<rect y="118" width="300" height="32" fill="' +
+        (night ? "#2f6b3c" : "#4cb050") +
+        '"/>' +
+        body +
+        "</svg>";
+      const KEC =
+        '<rect x="222" y="62" width="70" height="56" fill="#bfdbfe" stroke="#1d4ed8" stroke-width="2"/><rect x="216" y="56" width="82" height="8" fill="#1d4ed8"/><rect x="230" y="74" width="7" height="44" fill="#93c5fd"/><rect x="274" y="74" width="7" height="44" fill="#93c5fd"/><rect x="246" y="94" width="12" height="24" fill="#7c3f1d"/>' +
+        FG(252, 56);
+      const ill2 = (alt, body) =>
+        '<svg class="ill" viewBox="0 0 300 150" role="img" aria-label="' + alt + '"><rect width="300" height="150" fill="#eaf4ff"/>' + body + "</svg>";
+      const UN = ["km", "hm", "dam", "m", "dm", "cm", "mm"];
+      const stairs = (hl, notes) =>
+        ill2("Tangga satuan panjang dari km sampai mm",
+          UN.map((u, i) => '<rect x="' + (10 + i * 40) + '" y="' + (22 + i * 14) + '" width="40" height="' + (106 - i * 14) + '" fill="' + (hl.includes(i) ? "#fde047" : "#fbc4d8") + '" stroke="#be185d" stroke-width="1.5"/>' + T(30 + i * 40, 38 + i * 14, u, 12, "#831843")).join("") +
+          notes.map((n, k) => T(222, 30 + k * 18, n[0], 10, n[1])).join(""));
+      const bar = (alt, parts, tot) => {
+        const sum = parts.reduce((s, p) => s + p[0], 0);
+        let x = 15, out = "";
+        parts.forEach((p) => {
+          const w = (p[0] / sum) * 270, mid = x + w / 2;
+          out += '<rect x="' + x + '" y="50" width="' + w + '" height="36" fill="' + p[2] + '" stroke="#1f2a44" stroke-width="1.5"/>' +
+            (w >= 34 ? T(mid, 73, p[1], 11) : '<line x1="' + mid + '" y1="50" x2="' + mid + '" y2="38" stroke="#1f2a44"/>' + T(mid, 34, p[1], 10));
+          x += w;
+        });
+        return ill2(alt, out + '<path d="M15 98H285" stroke="#1f2a44" stroke-width="2"/>' + T(150, 120, tot, 13, "#1f4fbf"));
+      };
+      const tree = (x, h, t) =>
+        '<rect x="' + (x - 4) + '" y="' + (125 - h * 0.5) + '" width="8" height="' + h * 0.5 + '" fill="#7c3f1d"/><circle cx="' + x + '" cy="' + (125 - h * 0.7) + '" r="' + h * 0.32 + '" fill="#2e9e48"/>' + T(x, 142, t, 11, "#fff");
+      const SC = {
+        tangga: () => stairs([], [["Turun 1 tangga: × 10", "#dc2626"], ["Naik 1 tangga: ÷ 10", "#2563eb"]]),
+        turun: () => stairs([3, 4, 5], [["Turun: dikali 10", "#dc2626"]]),
+        naik: () => stairs([0, 1, 2, 3], [["Naik: dibagi 10", "#2563eb"]]),
+        pita: () => bar("Pita sepanjang 3 m 45 cm", [[300, "3 m", "#fde68a"], [45, "45 cm", "#fdba74"]], "3 m 45 cm = ... cm"),
+        kabel: () => bar("Pita 20 m dipotong dua kali", [[3, "3 m", "#bfdbfe"], [4, "4 m", "#bbf7d0"], [13, "sisa ?", "#e2e8f0"]], "Pita 20 m"),
+        pitaQ: () => bar("Panjang 9 m 160 cm", [[900, "9 m", "#fde68a"], [160, "160 cm", "#fdba74"]], "9 m 160 cm = ... cm"),
+        kabelQ: () => bar("Kabel 35 m dipotong tiga kali", [[5, "500 cm", "#bfdbfe"], [5, "50 dm", "#bbf7d0"], [1, "1 m", "#fde68a"], [24, "sisa ?", "#e2e8f0"]], "Kabel 35 m"),
+        pohon: () => ill2("Pohon mangga dan pohon jambu", '<rect y="125" width="300" height="25" fill="#4cb050"/>' + tree(90, 86, "Mangga 40 dm 30 cm") + tree(210, 74, "Jambu 3 m 70 cm")),
+      };
+
+      /* ===== DATA MATERI DAN SOAL ===== */
+      const L = [
+        { nm: "Tangga Satuan", sub: "Mengenal satuan panjang dan aturan tangga", ic: "🪜" },
+        { nm: "Ubah Satuan", sub: "Turun dikali, naik dibagi", ic: "🔁" },
+        { nm: "Cerita dan Campuran", sub: "Satuan campuran dan soal cerita", ic: "📏" },
+      ];
+      const M = [
+        { lv: 1, t: "Satuan panjang itu banyak, lho!", ill: "tangga", e: "senang",
+          say: "Halo, aku Bangjack! Penggaris di tasmu memakai sentimeter. Tapi panjang jalan atau kabel butuh satuan lain.",
+          pts: ["Penggaris dan meteran pita memakai satuan <b>sentimeter (cm)</b>. Meteran rol besar memakai <b>meter (m)</b>.",
+            "Selain itu ada <b>km</b> (kilometer), <b>hm</b> (hektometer), <b>dam</b> (dekameter), <b>dm</b> (desimeter), dan <b>mm</b> (milimeter).",
+            "Panjang yang sama bisa ditulis dengan satuan berbeda, misalnya 1 m = 100 cm."],
+          tip: "Satuan terbesar di tangga adalah km, yang terkecil adalah mm." },
+        { lv: 1, t: "Tangga satuan panjang", ill: "tangga", e: "pikir",
+          say: "Lihat tangga ini! Dari atas ke bawah, satuannya makin kecil.",
+          pts: ["Urutan dari terbesar ke terkecil: <b>km, hm, dam, m, dm, cm, mm</b>.",
+            "Setiap <b>turun 1 tangga</b>, bilangannya <b>dikali 10</b>.",
+            "Setiap <b>naik 1 tangga</b>, bilangannya <b>dibagi 10</b>.",
+            "Contoh: 1 m = 10 dm = 100 cm = 1.000 mm."],
+          tip: "Turun × 10, naik : 10. Telusuri tangganya dengan jarimu!" },
+        { lv: 2, t: "Turun tangga: dikali", ill: "turun", e: "semangat",
+          say: "Mengubah satuan besar ke satuan kecil berarti turun tangga. Hitung dulu berapa anak tangga yang dilewati.",
+          pts: ["<b>8 m = ... dm</b>. Dari m ke dm turun 1 tangga, berarti dikali 10. 8 × 10 = <b>80 dm</b>.",
+            "<b>7 m = ... cm</b>. Dari m ke cm turun 2 tangga, berarti dikali 100. 7 × 100 = <b>700 cm</b>.",
+            "Turun 1 tangga dikali 10, turun 2 tangga dikali 100, turun 3 tangga dikali 1.000."],
+          tip: "Banyak tangga sama dengan banyak nol: 2 tangga berarti dikali 100." },
+        { lv: 2, t: "Naik tangga: dibagi", ill: "naik", e: "pikir",
+          say: "Sekarang kebalikannya. Dari satuan kecil ke satuan besar, kita naik tangga.",
+          pts: ["<b>2.000 m = ... km</b>. Dari m ke km naik 3 tangga, berarti dibagi 1.000. 2.000 : 1.000 = <b>2 km</b>.",
+            "<b>300 cm = ... m</b>. Dari cm ke m naik 2 tangga, berarti dibagi 100. 300 : 100 = <b>3 m</b>.",
+            "Naik 1 tangga dibagi 10, naik 2 tangga dibagi 100, naik 3 tangga dibagi 1.000."],
+          tip: "Ragu? Gambar tangganya dulu, lalu hitung anak tangga yang kamu lewati." },
+        { lv: 3, t: "Satuan campuran", ill: "pita", e: "senang",
+          say: "Kadang panjang ditulis dengan dua satuan, misalnya 3 m 45 cm. Ubah semuanya ke satuan yang diminta, lalu jumlahkan.",
+          pts: ["<b>3 m 45 cm = ... cm</b>. 3 m = 300 cm, ditambah 45 cm. Hasilnya <b>345 cm</b>.",
+            "<b>15 cm 4 mm = ... mm</b>. 15 cm = 150 mm, ditambah 4 mm. Hasilnya <b>154 mm</b>.",
+            "<b>7 m 120 cm = ... cm</b>. 7 m = 700 cm, ditambah 120 cm. Hasilnya <b>820 cm</b>."],
+          tip: "Satuan yang berbeda tidak boleh langsung dijumlahkan. Samakan dulu!" },
+        { lv: 3, t: "Soal cerita panjang", ill: "kabel", e: "semangat",
+          say: "Dalam soal cerita, satuan sering bercampur. Tenang, ikuti tiga langkah ini.",
+          pts: ["<b>Langkah 1:</b> Baca soal dan tandai satuan yang ditanyakan.",
+            "<b>Langkah 2:</b> Samakan semua satuan.",
+            "<b>Langkah 3:</b> Hitung, lalu tulis jawaban beserta satuannya.",
+            "Contoh: pita 20 m dipotong 300 cm dan 40 dm. 300 cm = 3 m dan 40 dm = 4 m. Terpakai 3 + 4 = 7 m. Sisa 20 − 7 = 13 m = <b>1.300 cm</b>."],
+          tip: "Cek lagi: satuan jawabanmu sudah sama dengan yang ditanyakan?" },
+      ];
+      const ORD = ["Kilometer (km)", "Meter (m)", "Desimeter (dm)", "Milimeter (mm)"];
+      const Q = [
+        { id: 1, lv: 1, type: "match", w: 10, ill: "tangga", q: "Pasangkan singkatan dengan nama satuannya.",
+          pairs: [["km", "Kilometer"], ["hm", "Hektometer"], ["dam", "Dekameter"], ["dm", "Desimeter"]],
+          pool: ["Desimeter", "Kilometer", "Dekameter", "Hektometer"],
+          e: "km = kilometer, hm = hektometer, dam = dekameter, dm = desimeter." },
+        { id: 2, lv: 1, type: "tf", w: 10, ill: "tangga", q: "Benar atau salah? Setiap naik 1 tangga pada tangga satuan panjang, bilangannya dibagi 10.",
+          o: ["Benar", "Salah"], a: 0, e: "Naik 1 tangga berarti dibagi 10, turun 1 tangga berarti dikali 10." },
+        { id: 3, lv: 1, type: "order", w: 10, ill: "tangga", q: "Susun satuan berikut dari yang TERBESAR sampai yang terkecil.",
+          ord: ORD, pool: ["Desimeter (dm)", "Kilometer (km)", "Milimeter (mm)", "Meter (m)"],
+          e: "Urutan dari atas tangga: km, m, dm, mm." },
+        { id: 4, lv: 2, type: "mc", w: 10, ill: "turun", q: "5 m = ... dm",
+          o: ["5 dm", "50 dm", "500 dm", "0,5 dm"], a: 1,
+          e: "Dari m ke dm turun 1 tangga, jadi dikali 10. 5 × 10 = 50 dm." },
+        { id: 5, lv: 2, type: "num", w: 10, ill: "turun", q: "Isi titik-titik dengan bilangan yang tepat: 63 m = ... cm",
+          u: "cm", ans: 6300, key: "6.300 cm",
+          e: "Dari m ke cm turun 2 tangga, jadi dikali 100. 63 × 100 = 6.300 cm." },
+        { id: 6, lv: 2, type: "num", w: 10, ill: "naik", q: "Isi titik-titik dengan bilangan yang tepat: 1.800 cm = ... m",
+          u: "m", ans: 18, key: "18 m",
+          e: "Dari cm ke m naik 2 tangga, jadi dibagi 100. 1.800 : 100 = 18 m." },
+        { id: 7, lv: 2, type: "num", w: 10, ill: "naik", q: "Isi titik-titik dengan bilangan yang tepat: 10.000 m = ... km",
+          u: "km", ans: 10, key: "10 km",
+          e: "Dari m ke km naik 3 tangga, jadi dibagi 1.000. 10.000 : 1.000 = 10 km." },
+        { id: 8, lv: 3, type: "num", w: 10, ill: "pitaQ", q: "Ubahlah satuan panjang berikut: 9 m 160 cm = ... cm",
+          u: "cm", ans: 1060, key: "1.060 cm",
+          e: "9 m = 900 cm. Lalu 900 + 160 = 1.060 cm." },
+        { id: 9, lv: 3, type: "num", w: 10, ill: "kabelQ", q: "Pak Rafi membeli kabel sepanjang 35 m. Kabel dipotong menjadi beberapa bagian: 500 cm, 50 dm, dan 1 m. Berapa cm panjang sisa kabel?",
+          u: "cm", ans: 2400, key: "2.400 cm",
+          e: "500 cm = 5 m dan 50 dm = 5 m. Terpakai 5 + 5 + 1 = 11 m. Sisa 35 − 11 = 24 m = 2.400 cm." },
+        { id: 10, lv: 3, type: "num", w: 10, ill: "pohon", q: "Tinggi pohon mangga 40 dm 30 cm. Tinggi pohon jambu 3 m 70 cm. Berapa m total tinggi kedua pohon?",
+          u: "m", ans: 8, key: "8 m",
+          e: "40 dm 30 cm = 400 cm + 30 cm = 430 cm = 4,3 m. Pohon jambu 3 m 70 cm = 3,7 m. Total 4,3 + 3,7 = 8 m." },
+      ];
+
+      /* ===== STATE DAN PENILAIAN ===== */
+      let S = {
+        role: null,
+        guru: false,
+        nama: "",
+        kode: "",
+        ans: {},
+        tmp: {},
+        fail: 0,
+        until: 0,
+        pop: false,
+      };
+      let V = { v: "gate", p: {} },
+        ROWS = [];
+      const qsOf = (l) => Q.filter((q) => q.lv === l),
+        msOf = (l) => M.filter((m) => m.lv === l),
+        Qb = (id) => Q.find((q) => q.id === id);
+      const got = (q) => (S.ans[q.id] ? S.ans[q.id].p : 0);
+      const score = () => Q.reduce((s, q) => s + got(q), 0),
+        maxs = () => Q.reduce((s, q) => s + q.w, 0);
+      const lvDone = (l) => qsOf(l).every((q) => S.ans[q.id]),
+        lvOpen = (l) => l === 1 || lvDone(l - 1),
+        allDone = () => Q.every((q) => S.ans[q.id]);
+      const lvStars = (l) => {
+        if (!lvDone(l)) return 0;
+        const p =
+          qsOf(l).reduce((s, q) => s + got(q), 0) /
+          qsOf(l).reduce((s, q) => s + q.w, 0);
+        return p >= 0.9 ? 3 : p >= 0.6 ? 2 : 1;
+      };
+      const nilai = () => Math.round((score() / maxs()) * 1000) / 10;
+      const cat = (n) =>
+        n >= 90 ? { t: "Hebat Sekali!", e: "kaget", m: "Wow, luar biasa! Kamu jagoan mengubah satuan panjang!" }
+        : n >= 80 ? { t: "Bagus!", e: "senang", m: "Bagus! Sedikit lagi kamu jadi juara. Terus berlatih ya!" }
+        : n >= 70 ? { t: "Terus Berlatih!", e: "semangat", m: "Kamu sudah di jalur yang benar. Ayo berlatih lagi supaya makin mantap!" }
+        : { t: "Ayo Belajar Lagi!", e: "pikir", m: "Jangan menyerah! Baca materi tangga satuan bersamaku, lalu coba main sekali lagi." };
+      const badges = () => [
+        ["🪜", "Penjaga Tangga", lvDone(1)],
+        ["🔁", "Jagoan Ubah Satuan", lvDone(2)],
+        ["📏", "Pemecah Soal Cerita", lvDone(3)],
+        ["🌟", "Bintang Ukur", allDone() && nilai() >= 80],
+      ];
+      const keyOf = () =>
+        (S.kode + "-" + S.nama).toLowerCase().replace(/[^a-z0-9]+/g, "-");
+      function sesAll() {
+        try {
+          return JSON.parse(localStorage.getItem("mtk_sesi") || "{}");
+        } catch (e) {
+          return {};
+        }
+      }
+      function loadSes(k) {
+        return sesAll()[k] || null;
+      }
+      function saveSes() {
+        if (S.role !== "siswa") return;
+        try {
+          const o = sesAll();
+          o[keyOf()] = {
+            ans: S.ans,
+            tmp: S.tmp,
+            pos: { v: V.v, p: { l: V.p.l, i: V.p.i } },
+            t: Date.now(),
+          };
+          localStorage.setItem("mtk_sesi", JSON.stringify(o));
+        } catch (e) {}
+      }
+      function resumePos(ses) {
+        const p = ses && ses.pos;
+        if (!p || !p.v) return null;
+        if (p.v === "hasil") return allDone() ? ["hasil"] : null;
+        if (p.v === "peta") return ["peta"];
+        const l = p.p && p.p.l,
+          i = p.p && p.p.i;
+        if (![1, 2, 3].includes(l) || !lvOpen(l) || !(i >= 0)) return null;
+        if (p.v === "materi" && i < msOf(l).length) return ["materi", { l, i }];
+        if (p.v === "soal" && i < qsOf(l).length) return ["soal", { l, i }];
+        if (p.v === "lvdone" && lvDone(l)) return ["lvdone", { l }];
+        return null;
+      }
+      function save() {
+        const a = Q.filter((q) => S.ans[q.id]),
+          b = a.filter((q) => S.ans[q.id].p === q.w).length,
+          sk = score(),
+          det = {};
+        a.forEach((q) => (det[q.id] = S.ans[q.id].p));
+        DB.put({
+          k: keyOf(),
+          nama: S.nama,
+          kode: S.kode,
+          skor: sk,
+          maks: maxs(),
+          nilai: nilai(),
+          benar: b,
+          salah: a.length - b,
+          jawab: a.length,
+          prog: Math.round((a.length / Q.length) * 100),
+          status:
+            a.length === Q.length
+              ? "Selesai"
+              : a.length
+                ? "Sedang bermain"
+                : "Baru masuk",
+          t: new Date().toISOString(),
+          det,
+        });
+      }
+
+      /* ===== EFEK ===== */
+      function burst(n) {
+        for (let i = 0; i < n; i++) {
+          const e = document.createElement("span");
+          e.className = "fx";
+          e.textContent = ["⭐", "🎉", "✨", "🌟"][i % 4];
+          e.style.left = Math.random() * 100 + "vw";
+          e.style.animationDelay = Math.random() * 0.4 + "s";
+          document.body.appendChild(e);
+          setTimeout(() => e.remove(), 2400);
+        }
+      }
+      function plus(t) {
+        const e = document.createElement("div");
+        e.className = "plus";
+        e.textContent = t;
+        document.body.appendChild(e);
+        setTimeout(() => e.remove(), 1300);
+      }
+
+      /* ===== NAVIGASI ===== */
+      function go(v, p) {
+        V = { v, p: p || {} };
+        render();
+      }
+      function render(keep) {
+        if ((V.v === "dash" || V.v === "detail") && !S.guru)
+          V = { v: "gate", p: {} };
+        if (
+          ["peta", "materi", "soal", "lvdone", "hasil"].includes(V.v) &&
+          S.role !== "siswa"
+        )
+          V = { v: "gate", p: {} };
+        saveSes();
+        $("#app").innerHTML =
+          '<div class="pg" ' +
+          (keep ? 'style="animation:none"' : "") +
+          ">" +
+          VIEWS[V.v]() +
+          "</div>";
+        hud();
+        if (!keep) window.scrollTo(0, 0);
+        if (V.v !== "dash" && V.v !== "detail") DB.stop();
+        if (V.v === "dash" && !V.p.rows) {
+          if (DB.sb) {
+            if (DB.un) {
+              V.p.rows = ROWS;
+              render(true);
+            } else
+              DB.watch(
+                (r) => {
+                  ROWS = r;
+                  V.p.rows = r;
+                  V.p.err = "";
+                  if (V.v === "dash" || V.v === "detail") render(true);
+                },
+                (e) => {
+                  console.error("Supabase dashboard error:", e);
+                  V.p.rows = [];
+                  V.p.err = "Gagal memuat data: " + (e?.message || String(e));
+                  render(true);
+                },
+              );
+          } else
+            DB.list()
+              .then((r) => {
+                ROWS = r;
+                V.p.rows = r;
+                render(true);
+              })
+              .catch((e) => {
+                console.error("Supabase dashboard error:", e);
+                V.p.rows = [];
+                V.p.err = "Gagal memuat data: " + (e?.message || String(e));
+                render(true);
+              });
+        }
+        if (S.pop) {
+          S.pop = false;
+          const s = $(".sc");
+          if (s) s.classList.add("pp");
+        }
+      }
+      function hud() {
+        const h = $("#hud");
+        if (S.role === "siswa") {
+          const st = [1, 2, 3].reduce((s, l) => s + lvStars(l), 0),
+            pg = Math.round(
+              (Q.filter((q) => S.ans[q.id]).length / Q.length) * 100,
+            );
+          h.innerHTML =
+            '<div class="hud"><div><b>📏 ' +
+            esc(S.nama) +
+            " (" +
+            esc(S.kode) +
+            ')</b><span><span class="chip sc">🪙 ' +
+            fm(score()) +
+            " / " +
+            maxs() +
+            '</span> <span class="chip">⭐ ' +
+            st +
+            '/9</span> <button class="btn ghost" style="min-height:34px;padding:4px 10px;margin:0" onclick="go(\'peta\')" aria-label="Ke peta">🗺️</button> <button class="btn ghost" style="min-height:34px;padding:4px 10px;margin:0" onclick="keluar()">Keluar</button></span></div><div class="pbar" aria-label="Progres ' +
+            pg +
+            ' persen"><i style="width:' +
+            pg +
+            '%"></i></div></div>';
+        } else if (S.guru)
+          h.innerHTML =
+            '<div class="hud"><div><b>🧑‍🏫 Mode Guru</b><span class="chip">Dashboard</span></div></div>';
+        else h.innerHTML = "";
+      }
+      function keluar() {
+        if (
+          S.role === "siswa" &&
+          !allDone() &&
+          !confirm(
+            "Keluar sekarang? Progresmu tersimpan. Masuk lagi dengan nama dan kode kelas yang sama untuk melanjutkan.",
+          )
+        )
+          return;
+        DB.stop();
+        DB.uid = null;
+        if (DB.sb && S.guru) DB.sb.auth.signOut().catch(() => {});
+        S = {
+          role: null,
+          guru: false,
+          nama: "",
+          kode: "",
+          ans: {},
+          tmp: {},
+          fail: 0,
+          until: 0,
+          pop: false,
+        };
+        go("gate");
+      }
+
+      /* ===== TAMPILAN ===== */
+      const VIEWS = {
+        gate: () => gateHTML(),
+        siswa: () =>
+          '<div class="card"><h2>Masuk sebagai Siswa 🎒</h2>' +
+          bub(
+            "senang",
+            "Tulis namamu dan kode kelasmu dari Bapak atau Ibu Guru, ya! Pakai nama dan kode yang sama setiap kali masuk, supaya kamu lanjut dari terakhir.",
+          ) +
+          '<label for="nm">Nama</label><input id="nm" maxlength="30" autocomplete="off" placeholder="Tulis namamu"><label for="kd">Kode kelas</label><input id="kd" maxlength="12" autocomplete="off" placeholder="Contoh: IVA"><div id="er" class="fb bad" hidden></div><p><button class="btn go" onclick="mulai()">Mulai Petualangan ▶</button><button class="btn ghost" onclick="go(\'gate\')">◀ Kembali</button></p></div>',
+        guru: () =>
+          '<div class="card"><h2>Login Guru 🧑‍🏫</h2><p class="meta">Halaman ini hanya untuk guru. Siswa tidak dapat membuka dashboard nilai.</p>' +
+          (DB.sb
+            ? '<label for="em">Email guru</label><input id="em" type="email" autocomplete="username">'
+            : "") +
+          '<label for="pw">Sandi</label><input id="pw" type="password" autocomplete="current-password" onkeydown="if(event.key===\'Enter\')masuk()"><div id="er" class="fb bad" hidden></div><p><button class="btn go" onclick="masuk()">Masuk</button><button class="btn ghost" onclick="go(\'gate\')">◀ Kembali</button></p>' +
+          "<details><summary><b>Petunjuk teknis Supabase</b></summary><p>Mode saat ini: " +
+          (DB.sb ? "Supabase (daring)" : "Belum terhubung / lokal") +
+          ". Isi Project URL pada CFG.supabase di bagian atas file. Publishable key sudah terpasang. Jangan masukkan secret/service_role key ke HTML.</p><p>Di Supabase, aktifkan Authentication → Providers → Anonymous untuk siswa dan Email untuk guru. Buat akun guru melalui Authentication → Users. Buat tabel <b>hasil_kuis</b> dan tabel <b>guru_access</b>, lalu jalankan SQL pendamping yang disertakan bersama file ini. Setelah login guru pertama kali, salin User UID dari Authentication → Users dan masukkan ke tabel guru_access. Dashboard hanya dapat dibaca akun yang UID-nya terdaftar di tabel tersebut.</p><p>Data siswa dikirim ke Supabase secara otomatis ketika progres/nilai disimpan. Siswa menggunakan identitas anonim; satu perangkat/browser memiliki identitas tersendiri.</p></details></div>",
+        peta: () => {
+          const cur = [1, 2, 3].find((l) => !lvDone(l)),
+            pos = [
+              [25, 82],
+              [72, 60],
+              [28, 36],
+              [70, 14],
+            ],
+            tp = allDone() ? 3 : cur - 1,
+            jx = pos[tp][0];
+          const nodes = [1, 2, 3]
+            .map((l) => {
+              const [x, y] = pos[l - 1],
+                k = lvDone(l) ? "dn" : lvOpen(l) ? "" : "lk";
+              return (
+                '<button class="node ' +
+                k +
+                '" style="left:' +
+                x +
+                "%;top:" +
+                y +
+                '%" ' +
+                (lvOpen(l) ? "" : "disabled") +
+                " onclick=\"go('materi',{l:" +
+                l +
+                ',i:0})" aria-label="Level ' +
+                l +
+                " " +
+                L[l - 1].nm +
+                '">' +
+                L[l - 1].ic +
+                '</button><div class="nl" style="left:' +
+                x +
+                "%;top:calc(" +
+                y +
+                '% + 42px)">Level ' +
+                l +
+                " " +
+                "⭐".repeat(lvStars(l)) +
+                "☆".repeat(3 - lvStars(l)).replace(/☆/g, "") +
+                "</div>"
+              );
+            })
+            .join("");
+          const tr =
+            '<button class="node ' +
+            (allDone() ? "" : "lk") +
+            '" style="left:' +
+            pos[3][0] +
+            "%;top:" +
+            pos[3][1] +
+            '%" ' +
+            (allDone() ? "" : "disabled") +
+            ' onclick="go(\'hasil\')" aria-label="Lihat rapor">🏆</button><div class="nl" style="left:' +
+            pos[3][0] +
+            "%;top:calc(" +
+            pos[3][1] +
+            '% + 42px)">Rapor</div>';
+          const jy = pos[tp][1],
+            side =
+              jx < 50 ? "left:" + (jx + 11) + "%" : "left:" + (jx - 30) + "%";
+          return (
+            '<div class="card"><h2>Peta Petualangan 🗺️</h2>' +
+            bub(
+              allDone() ? "semangat" : "senang",
+              allDone()
+                ? "Semua level selesai! Buka rapor di piala 🏆."
+                : "Ayo ke Level " +
+                    cur +
+                    ": " +
+                    L[cur - 1].nm +
+                    ". Ketuk lingkaran di peta untuk belajar dan bermain!",
+            ) +
+            '<div class="map"><svg viewBox="0 0 320 420" role="img" aria-label="Peta petualangan"><rect width="320" height="420" fill="#bfe9ff"/><circle cx="276" cy="36" r="20" fill="#ffd54a"/><ellipse cx="60" cy="50" rx="32" ry="11" fill="#fff"/><ellipse cx="92" cy="42" rx="22" ry="10" fill="#fff"/><path d="M0 120Q80 90 160 120T320 110V420H0Z" fill="#7ac36a"/><path d="M0 250Q100 220 200 250T320 240V420H0Z" fill="#4cb050"/><path d="M80 344C200 330 280 300 230 252S20 200 90 151S200 100 224 59" fill="none" stroke="#e9c47a" stroke-width="16" stroke-linecap="round"/><path d="M80 344C200 330 280 300 230 252S20 200 90 151S200 100 224 59" fill="none" stroke="#b88a3c" stroke-width="2" stroke-dasharray="2 10" stroke-linecap="round"/>' +
+            H(10, 320, "#fde68a", 0.7) +
+            H(260, 400, "#bbf7d0", 0.7) +
+            H(250, 180, "#fbcfe8", 0.6) +
+            H(20, 110, "#bfdbfe", 0.6) +
+            '<g fill="#2e7d32"><circle cx="40" cy="260" r="14"/><circle cx="290" cy="330" r="16"/><circle cx="150" cy="390" r="12"/><circle cx="20" cy="190" r="12"/></g><g fill="#7c3f1d"><rect x="38" y="272" width="4" height="10"/><rect x="288" y="344" width="4" height="10"/><rect x="148" y="400" width="4" height="10"/><rect x="18" y="200" width="4" height="10"/></g></svg>' +
+            nodes +
+            tr +
+            '<div class="mj" style="' +
+            side +
+            ";top:calc(" +
+            jy +
+            '% - 12%)">' +
+            jack("semangat", 52) +
+            "</div></div></div>"
+          );
+        },
+        materi: () => {
+          const l = V.p.l,
+            i = V.p.i,
+            ms = msOf(l),
+            m = ms[i],
+            last = i === ms.length - 1;
+          return (
+            '<div class="card"><div class="meta">Level ' +
+            l +
+            ": " +
+            L[l - 1].nm +
+            " | Materi " +
+            (i + 1) +
+            " dari " +
+            ms.length +
+            "</div><h2>" +
+            m.t +
+            "</h2>" +
+            SC[m.ill]() +
+            bub(m.e, m.say) +
+            m.pts.map((p) => '<div class="tile">' + p + "</div>").join("") +
+            bub("semangat", m.tip) +
+            '<div class="row"><button class="btn ghost" onclick="' +
+            (i
+              ? "go('materi',{l:" + l + ",i:" + (i - 1) + "})"
+              : "go('peta')") +
+            '">◀ ' +
+            (i ? "Kembali" : "Peta") +
+            '</button><button class="btn go" onclick="' +
+            (last
+              ? lvDone(l)
+                ? "go('lvdone',{l:" + l + "})"
+                : "go('soal',{l:" +
+                  l +
+                  ",i:" +
+                  Math.max(
+                    0,
+                    qsOf(l).findIndex((q) => !S.ans[q.id]),
+                  ) +
+                  "})"
+              : "go('materi',{l:" + l + ",i:" + (i + 1) + "})") +
+            '">' +
+            (last
+              ? lvDone(l)
+                ? "Lihat hasil level 🏁"
+                : "Mulai soal ✏️"
+              : "Lanjut ▶") +
+            "</button></div></div>"
+          );
+        },
+        soal: () => {
+          const l = V.p.l,
+            i = V.p.i,
+            qs = qsOf(l),
+            q = qs[i],
+            a = S.ans[q.id],
+            full = a && a.p === q.w;
+          const dots =
+            '<div class="dots" aria-hidden="true">' +
+            qs
+              .map(
+                (x, k) =>
+                  '<i class="' +
+                  (S.ans[x.id] ? (S.ans[x.id].p === x.w ? "d" : "x") : "") +
+                  (k === i ? " n" : "") +
+                  '"></i>',
+              )
+              .join("") +
+            "</div>";
+          let body = "";
+          if (q.type === "mc" || q.type === "tf")
+            body = q.o
+              .map(
+                (t, j) =>
+                  '<button class="opt ' +
+                  (a ? (j === q.a ? "ok" : j === a.sel ? "bad" : "") : "") +
+                  '" ' +
+                  (a ? "disabled" : "") +
+                  ' onclick="pk(' +
+                  q.id +
+                  "," +
+                  j +
+                  ')"><b>' +
+                  (q.type === "tf" ? (j ? "✗" : "✓") : "ABCD"[j]) +
+                  "</b><span>" +
+                  t +
+                  "</span></button>",
+              )
+              .join("");
+          if (q.type === "match") {
+            const t = S.tmp[q.id] || (S.tmp[q.id] = []);
+            body =
+              q.pairs
+                .map(
+                  (p, k) =>
+                    '<div class="tile"><b>' +
+                    p[0] +
+                    '</b><br><select aria-label="Pasangan ' +
+                    p[0] +
+                    '" ' +
+                    (a ? "disabled" : "") +
+                    ' onchange="tm(' +
+                    q.id +
+                    "," +
+                    k +
+                    ',this.value)"><option value="">Pilih pasangan</option>' +
+                    q.pool
+                      .map(
+                        (o) =>
+                          "<option " +
+                          (t[k] === o ? "selected" : "") +
+                          ">" +
+                          o +
+                          "</option>",
+                      )
+                      .join("") +
+                    "</select>" +
+                    (a
+                      ? '<div class="fb ' +
+                        (t[k] === p[1] ? "ok" : "bad") +
+                        '">' +
+                        (t[k] === p[1] ? "Tepat!" : "Yang benar: " + p[1]) +
+                        "</div>"
+                      : "") +
+                    "</div>",
+                )
+                .join("") +
+              (a
+                ? ""
+                : '<button id="chk" class="btn go" ' +
+                  (q.pairs.every((p, k) => t[k]) ? "" : "disabled") +
+                  ' onclick="ck(' +
+                  q.id +
+                  ')">Periksa jawaban ✔️</button>');
+          }
+          if (q.type === "order") {
+            const t = S.tmp[q.id] || (S.tmp[q.id] = []);
+            body =
+              '<div class="tile">' +
+              [0, 1, 2, 3]
+                .map(
+                  (k) =>
+                    '<div class="fb ' +
+                    (a ? (t[k] === q.ord[k] ? "ok" : "bad") : "info") +
+                    '">Urutan ' +
+                    (k + 1) +
+                    ": <b>" +
+                    (t[k] || "...") +
+                    "</b></div>",
+                )
+                .join("") +
+              "</div>" +
+              (a
+                ? ""
+                : '<div class="row">' +
+                  q.pool
+                    .filter((x) => t.indexOf(x) < 0)
+                    .map(
+                      (x) =>
+                        '<button class="btn warn" data-v="' +
+                        x +
+                        '" onclick="od(' +
+                        q.id +
+                        ',this.dataset.v)">' +
+                        x +
+                        "</button>",
+                    )
+                    .join("") +
+                  '</div><button class="btn ghost" onclick="S.tmp[' +
+                  q.id +
+                  ']=[];render(1)">↩️ Ulangi susunan</button> <button id="chk" class="btn go" ' +
+                  (t.length === 4 ? "" : "disabled") +
+                  ' onclick="ck(' +
+                  q.id +
+                  ')">Periksa jawaban ✔️</button>');
+          }
+          if (q.type === "num") {
+            const v = a && typeof a.sel === "string" ? esc(a.sel) : "";
+            body = `<div class="row" style="align-items:center;flex-wrap:nowrap"><input id="ni" inputmode="decimal" autocomplete="off" placeholder="Tulis angkanya" aria-label="Jawaban" value="${v}" ${a ? "disabled" : ""} onkeydown="if(event.key==='Enter')ck(${q.id})"><b style="white-space:nowrap">${q.u}</b></div><div id="er" class="fb bad" hidden></div>${a ? "" : `<button class="btn go" onclick="ck(${q.id})">Periksa jawaban ✔️</button>`}`;
+          }
+          const key =
+            q.type === "num"
+              ? q.key
+              : q.type === "match"
+              ? q.pairs.map((p) => p[0] + " = " + p[1]).join("; ")
+              : q.type === "order"
+                ? q.ord.join(" > ")
+                : q.o[q.a];
+          const fb = a
+            ? bub(a.e, a.m) +
+              '<div class="fb ' +
+              (full ? "ok" : "bad") +
+              '"><b>' +
+              (full ? "Benar!" : a.p > 0 ? "Sebagian benar." : "Belum tepat.") +
+              " Skor soal ini " +
+              fm(a.p) +
+              " dari " +
+              q.w +
+              ".</b> Skor kamu sekarang " +
+              fm(score()) +
+              " dari " +
+              maxs() +
+              ".<br><b>Kunci jawaban:</b> " +
+              key +
+              "<br>" +
+              q.e +
+              '</div><button class="btn go" onclick="' +
+              (i < qs.length - 1
+                ? "go('soal',{l:" + l + ",i:" + (i + 1) + "})"
+                : "go('lvdone',{l:" + l + "})") +
+              '">' +
+              (i < qs.length - 1 ? "Soal berikutnya ▶" : "Selesai level 🏁") +
+              "</button>"
+            : "";
+          return (
+            '<div class="card"><div class="meta">Level ' +
+            l +
+            ": " +
+            L[l - 1].nm +
+            " | Soal " +
+            (i + 1) +
+            " dari " +
+            qs.length +
+            " | Bobot " +
+            q.w +
+            " poin</div>" +
+            dots +
+            SC[q.ill]() +
+            bub(a ? "pikir" : "pikir", q.q) +
+            body +
+            fb +
+            "</div>"
+          );
+        },
+        lvdone: () => {
+          const l = V.p.l,
+            s = lvStars(l),
+            qs = qsOf(l),
+            nx = l < 3 ? "go('materi',{l:" + (l + 1) + ",i:0})" : "go('hasil')";
+          return (
+            '<div class="card c"><div class="bigsc">' +
+            L[l - 1].ic +
+            "</div><h2>Level " +
+            l +
+            " selesai: " +
+            L[l - 1].nm +
+            '</h2><div class="stars">' +
+            "⭐".repeat(s) +
+            "☆".repeat(3 - s) +
+            "</div>" +
+            bub(
+              s === 3 ? "kaget" : s === 2 ? "senang" : "semangat",
+              s === 3
+                ? "Wow, bintang tiga! Kamu hebat sekali!"
+                : s === 2
+                  ? "Bagus! Dua bintang untukmu."
+                  : "Kamu sudah menyelesaikan level ini. Baca materinya lagi untuk bintang lebih banyak!",
+            ) +
+            '<div class="wrap"><table><tr><th>Soal</th><th>Perolehan</th></tr>' +
+            qs
+              .map(
+                (q, k) =>
+                  "<tr><td>" +
+                  (k + 1) +
+                  ". " +
+                  esc(q.q) +
+                  "</td><td>" +
+                  fm(got(q)) +
+                  " / " +
+                  q.w +
+                  "</td></tr>",
+              )
+              .join("") +
+            '</table></div><p><button class="btn ghost" onclick="go(\'peta\')">🗺️ Peta</button><button class="btn go" onclick="' +
+            nx +
+            '">' +
+            (l < 3 ? "Level berikutnya ▶" : "Lihat rapor 🏆") +
+            "</button></p></div>"
+          );
+        },
+        hasil: () => {
+          const n = nilai(),
+            c = cat(n),
+            b = Q.filter((q) => got(q) === q.w).length;
+          if (!allDone())
+            return (
+              '<div class="card c">' +
+              bub(
+                "pikir",
+                "Selesaikan semua level dulu ya, baru rapor terbuka.",
+              ) +
+              '<button class="btn go" onclick="go(\'peta\')">Ke peta</button></div>'
+            );
+          return (
+            '<div class="card c"><div class="bigsc">' +
+            (n >= 90 ? "🏆" : n >= 80 ? "🥇" : n >= 70 ? "💪" : "📚") +
+            "</div><h2>" +
+            c.t +
+            '</h2><div class="bigsc">' +
+            fm(n) +
+            "</div><p>Skor perolehan <b>" +
+            fm(score()) +
+            "</b> dari skor maksimal <b>" +
+            maxs() +
+            "</b><br>Nilai Akhir = (" +
+            fm(score()) +
+            " ÷ " +
+            maxs() +
+            ") × 100 = <b>" +
+            fm(n) +
+            "</b></p>" +
+            bub(c.e, c.m) +
+            '</div><div class="card"><h2>Rapor Petualangan: ' +
+            esc(S.nama) +
+            " (" +
+            esc(S.kode) +
+            ")</h2><p>Jawaban benar penuh: <b>" +
+            b +
+            "</b> | Belum tepat: <b>" +
+            (Q.length - b) +
+            '</b></p><div class="wrap"><table><tr><th>Level</th><th>Soal</th><th>Maks</th><th>Perolehan</th><th>Bintang</th></tr>' +
+            [1, 2, 3]
+              .map(
+                (l) =>
+                  "<tr><td>" +
+                  L[l - 1].nm +
+                  "</td><td>" +
+                  qsOf(l).length +
+                  "</td><td>" +
+                  qsOf(l).reduce((s, q) => s + q.w, 0) +
+                  "</td><td>" +
+                  fm(qsOf(l).reduce((s, q) => s + got(q), 0)) +
+                  "</td><td>" +
+                  "⭐".repeat(lvStars(l)) +
+                  "</td></tr>",
+              )
+              .join("") +
+            '<tr><th colspan="2">Total</th><th>' +
+            maxs() +
+            "</th><th>" +
+            fm(score()) +
+            '</th><th></th></tr></table></div><p class="meta">Aturan nilai: tiap soal bernilai 10 poin. Jawaban benar mendapat poin penuh, jawaban salah 0 poin. Soal mencocokkan dan menyusun urutan mendapat poin sebagian sesuai jumlah yang benar.</p><h3>Lencanamu</h3>' +
+            badges()
+              .map(
+                (x) =>
+                  '<div class="badge ' +
+                  (x[2] ? "" : "off") +
+                  '"><span>' +
+                  x[0] +
+                  "</span>" +
+                  x[1] +
+                  "</div>",
+              )
+              .join("") +
+            '<p><button class="btn warn" onclick="ulang()">🔄 Main lagi</button><button class="btn ghost" onclick="keluar()">🏠 Selesai dan keluar</button></p></div>'
+          );
+        },
+        dash: () => {
+          const R = V.p.rows;
+          if (!R) return '<div class="card c">Memuat data nilai...</div>';
+          const f = V.p.f || "",
+            ks = [...new Set(R.map((r) => r.kode))].sort(),
+            D = R.filter((r) => !f || r.kode === f).sort(
+              (a, b) =>
+                a.kode.localeCompare(b.kode) || a.nama.localeCompare(b.nama),
+            ),
+            dn = D.filter((r) => r.status === "Selesai"),
+            av = dn.length
+              ? Math.round(
+                  (dn.reduce((s, r) => s + r.nilai, 0) / dn.length) * 10,
+                ) / 10
+              : 0;
+          return (
+            '<div class="card"><h2>Dashboard Guru 📊</h2>' +
+            (V.p.err ? '<div class="fb bad">' + V.p.err + "</div>" : "") +
+            '<p class="meta">Penyimpanan: ' +
+            (DB.sb
+              ? "Supabase (diperbarui langsung)"
+              : "lokal, hanya data dari perangkat ini") +
+            '</p><div class="grid"><div class="tile"><b>' +
+            D.length +
+            '</b> siswa terdaftar</div><div class="tile"><b>' +
+            dn.length +
+            '</b> sudah selesai</div><div class="tile">Rata-rata nilai selesai: <b>' +
+            fm(av) +
+            '</b></div></div><label for="fk">Kelas</label><select id="fk" onchange="V.p.f=this.value;render(1)"><option value="">Semua kelas</option>' +
+            ks
+              .map(
+                (k) =>
+                  "<option " +
+                  (k === f ? "selected" : "") +
+                  ' value="' +
+                  esc(k) +
+                  '">' +
+                  esc(k) +
+                  "</option>",
+              )
+              .join("") +
+            '</select><p><button class="btn go" onclick="V.p.rows=null;render(1)">🔄 Segarkan</button><button class="btn warn" onclick="csv()">⬇️ Unduh CSV</button>' +
+            (DB.sb
+              ? ""
+              : '<button class="btn ghost" onclick="gantiSandi()">🔑 Ganti sandi</button>') +
+            '<button class="btn red" onclick="hapusSemua()">🗑️ Hapus semua</button><button class="btn ghost" onclick="keluar()">Keluar</button></p>' +
+            '<div class="wrap"><table><tr><th>No</th><th>Nama</th><th>Kelas</th><th>Skor</th><th>Benar</th><th>Salah</th><th>Progres</th><th>Status</th><th>Detail</th></tr>' +
+            (D.length
+              ? D.map(
+                  (r, k) =>
+                    "<tr><td>" +
+                    (k + 1) +
+                    "</td><td>" +
+                    esc(r.nama) +
+                    "</td><td>" +
+                    esc(r.kode) +
+                    "</td><td><b>" +
+                    fm(r.skor) +
+                    "</b>/" +
+                    r.maks +
+                    "</td><td>" +
+                    r.benar +
+                    "</td><td>" +
+                    r.salah +
+                    '</td><td><div class="pb2"><i style="width:' +
+                    r.prog +
+                    '%"></i></div>' +
+                    r.prog +
+                    "%</td><td>" +
+                    esc(r.status) +
+                    '</td><td><button class="btn ghost" style="min-height:36px;padding:4px 10px;margin:0" onclick="go(\'detail\',{k:\'' +
+                    esc(r.k) +
+                    "'})\">Lihat</button></td></tr>",
+                ).join("")
+              : '<tr><td colspan="9">Belum ada siswa yang bermain.</td></tr>') +
+            '</table></div><p class="meta">Benar dihitung jika soal dijawab dengan poin penuh. Salah mencakup jawaban yang belum tepat atau sebagian benar.</p></div>'
+          );
+        },
+        detail: () => {
+          const r = ROWS.find((x) => x.k === V.p.k);
+          if (!r)
+            return '<div class="card">Data tidak ditemukan. <button class="btn ghost" onclick="go(\'dash\')">Kembali</button></div>';
+          return (
+            '<div class="card"><h2>Hasil ' +
+            esc(r.nama) +
+            " (" +
+            esc(r.kode) +
+            ")</h2><p>Nilai <b>" +
+            fm(r.nilai) +
+            "</b> | Skor " +
+            fm(r.skor) +
+            " dari " +
+            r.maks +
+            " | Benar " +
+            r.benar +
+            " | Salah " +
+            r.salah +
+            " | " +
+            esc(r.status) +
+            '<br><span class="meta">Terakhir diperbarui ' +
+            new Date(r.t).toLocaleString("id-ID") +
+            "</span></p>" +
+            [1, 2, 3]
+              .map(
+                (l) =>
+                  "<h3>Level " +
+                  l +
+                  ": " +
+                  L[l - 1].nm +
+                  '</h3><div class="wrap"><table><tr><th>Soal</th><th>Hasil</th></tr>' +
+                  qsOf(l)
+                    .map((q) => {
+                      const p = r.det && r.det[q.id];
+                      return (
+                        "<tr><td>" +
+                        esc(q.q) +
+                        "</td><td>" +
+                        (p === undefined
+                          ? "Belum dijawab"
+                          : (p === q.w ? "✅" : p > 0 ? "🟡" : "❌") +
+                            " " +
+                            fm(p) +
+                            " / " +
+                            q.w) +
+                        "</td></tr>"
+                      );
+                    })
+                    .join("") +
+                  "</table></div>",
+              )
+              .join("") +
+            '<p><button class="btn ghost" onclick="go(\'dash\')">◀ Kembali ke dashboard</button></p></div>'
+          );
+        },
+      };
+
+      /* ===== AKSI ===== */
+      function err(t) {
+        const e = $("#er");
+        e.textContent = t;
+        e.hidden = false;
+      }
+      async function mulai() {
+        const n = $("#nm").value.trim().replace(/\s+/g, " "),
+          k = $("#kd").value.trim().toUpperCase().replace(/\s+/g, "");
+        if (n.length < 2) return err("Tulis namamu dulu, minimal 2 huruf ya.");
+        if (k.length < 2) return err("Tulis kode kelasmu dulu ya.");
+        S = {
+          role: "siswa",
+          guru: false,
+          nama: n,
+          kode: k,
+          ans: {},
+          tmp: {},
+          fail: 0,
+          until: 0,
+          pop: false,
+        };
+        if (DB.sb) {
+          try {
+            DB.uid = await DB.anon();
+          } catch (e) {
+            DB.uid = null;
+            alert(
+              "Koneksi ke server belum aktif. Nilaimu tersimpan di perangkat ini dulu.",
+            );
+          }
+        }
+        const k0 = keyOf(),
+          ses = loadSes(k0);
+        let back = false;
+        if (ses && ses.ans && Object.keys(ses.ans).length) {
+          S.ans = ses.ans;
+          S.tmp = ses.tmp || {};
+          back = true;
+        } else {
+          const old = lsGet()[k0];
+          if (old && old.det) {
+            Object.keys(old.det).forEach((id) => {
+              const q = Qb(+id);
+              if (q)
+                S.ans[q.id] = {
+                  p: old.det[id],
+                  sel: -1,
+                  e: old.det[id] === q.w ? "senang" : "pikir",
+                  m: "Jawabanmu tadi sudah tersimpan.",
+                };
+            });
+            back = Object.keys(S.ans).length > 0;
+          }
+        }
+        save();
+        burst(10);
+        const r = back ? resumePos(ses) : null;
+        go(...(r || ["peta"]));
+        if (back) plus("Selamat datang kembali! 👋");
+      }
+      function ulang() {
+        S.ans = {};
+        S.tmp = {};
+        save();
+        go("peta");
+      }
+      async function masuk() {
+        if (Date.now() < S.until)
+          return err("Terlalu banyak percobaan. Tunggu 30 detik.");
+        const pw = $("#pw").value;
+        let ok = false;
+        try {
+          if (DB.sb) {
+            const { data, error } = await DB.sb.auth.signInWithPassword({
+              email: $("#em").value.trim(),
+              password: pw,
+            });
+            if (error) throw error;
+            const check = await DB.sb
+              .from("guru_access")
+              .select("user_id")
+              .eq("user_id", data.user.id)
+              .maybeSingle();
+            if (check.error || !check.data)
+              throw new Error("Akun ini belum diberi akses guru.");
+            ok = true;
+          } else {
+            let s = null;
+            try {
+              s = localStorage.getItem("mtk_pw");
+            } catch (e) {}
+            if (!s) {
+              if (pw.length < 6)
+                return err("Buat sandi baru, minimal 6 karakter.");
+              try {
+                localStorage.setItem("mtk_pw", h53("mtk:" + pw));
+              } catch (e) {}
+              ok = true;
+            } else ok = h53("mtk:" + pw) === s;
+          }
+        } catch (e) {
+          ok = false;
+        }
+        if (!ok) {
+          if (++S.fail >= 5) {
+            S.until = Date.now() + 30000;
+            S.fail = 0;
+          }
+          return err(
+            DB.sb
+              ? "Email/sandi salah atau akun belum terdaftar sebagai guru."
+              : "Sandi salah.",
+          );
+        }
+        S.role = "guru";
+        S.guru = true;
+        go("dash");
+      }
+      function gantiSandi() {
+        const p = prompt("Sandi baru (minimal 6 karakter):");
+        if (!p) return;
+        if (p.length < 6) return alert("Sandi terlalu pendek.");
+        try {
+          localStorage.setItem("mtk_pw", h53("mtk:" + p));
+          alert(
+            "Sandi diganti. Catatan: sandi ini hanya berlaku di browser ini.",
+          );
+        } catch (e) {
+          alert("Gagal menyimpan sandi.");
+        }
+      }
+      async function hapusSemua() {
+        if (
+          !confirm(
+            "Hapus SEMUA data nilai siswa? Tindakan ini tidak dapat dibatalkan.",
+          )
+        )
+          return;
+
+        try {
+          await DB.clear();
+          alert("Data siswa berhasil dihapus.");
+          V.p.rows = null;
+          render(1);
+        } catch (e) {
+          console.error("Gagal menghapus data:", e);
+          alert("Gagal menghapus data: " + (e.message || e));
+        }
+      }
+      function csv() {
+        const q = (v) => {
+            v = String(v);
+            if (/^[=+\-@]/.test(v)) v = "'" + v;
+            return '"' + v.replace(/"/g, '""') + '"';
+          },
+          f = V.p.f || "";
+        const rows = (V.p.rows || [])
+          .filter((r) => !f || r.kode === f)
+          .map((r) =>
+            [
+              r.nama,
+              r.kode,
+              r.skor,
+              r.maks,
+              r.nilai,
+              r.benar,
+              r.salah,
+              r.prog,
+              r.status,
+              r.t,
+            ]
+              .map(q)
+              .join(","),
+          );
+        const b = new Blob(
+            [
+              "\ufeff" +
+                [
+                  "Nama",
+                  "Kelas",
+                  "Skor",
+                  "Skor Maks",
+                  "Nilai",
+                  "Benar",
+                  "Salah",
+                  "Progres (%)",
+                  "Status",
+                  "Waktu",
+                ]
+                  .map(q)
+                  .join(",") +
+                "\n" +
+                rows.join("\n"),
+            ],
+            { type: "text/csv" },
+          ),
+          a = document.createElement("a");
+        a.href = URL.createObjectURL(b);
+        a.download = "rekap-nilai-satuan-panjang.csv";
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+      }
+      function fin(q, p, sel) {
+        const full = p === q.w;
+        S.ans[q.id] = {
+          p,
+          sel,
+          e: full ? pick(["senang", "semangat"]) : p > 0 ? "semangat" : "pikir",
+          m: full
+            ? pick([
+                "Hebat! Jawabanmu benar!",
+                "Keren! Kamu pintar sekali!",
+                "Tepat sekali, teman!",
+              ])
+            : p > 0
+              ? "Lumayan! Sebagian jawabanmu sudah benar."
+              : "Belum tepat. Ayo coba lagi di soal berikutnya!",
+        };
+        if (p > 0) {
+          plus("+" + fm(p));
+          burst(full ? 16 : 6);
+          S.pop = true;
+        }
+        save();
+        render(1);
+      }
+      function pk(id, j) {
+        const q = Qb(id);
+        if (S.ans[q.id]) return;
+        fin(q, j === q.a ? q.w : 0, j);
+      }
+      function tm(id, k, v) {
+        S.tmp[id][k] = v;
+        const q = Qb(id);
+        $("#chk").disabled = !q.pairs.every((p, i) => S.tmp[id][i]);
+      }
+      function od(id, v) {
+        const t = S.tmp[id] || (S.tmp[id] = []);
+        if (t.length < 4 && t.indexOf(v) < 0) t.push(v);
+        render(1);
+      }
+      function pn(s) {
+        s = String(s).trim().replace(/\s+/g, "");
+        if (/^\d{1,3}(\.\d{3})+(,\d+)?$/.test(s)) s = s.replace(/\./g, "").replace(",", ".");
+        else s = s.replace(",", ".");
+        return /^\d+(\.\d+)?$/.test(s) ? parseFloat(s) : NaN;
+      }
+      function ck(id) {
+        const q = Qb(id), t = S.tmp[id] || [];
+        if (S.ans[id]) return;
+        if (q.type === "num") {
+          const raw = $("#ni").value, v = pn(raw);
+          if (isNaN(v)) return err("Tulis angkanya dulu ya, tanpa satuan.");
+          return fin(q, Math.abs(v - q.ans) < 1e-9 ? q.w : 0, raw.trim());
+        }
+        const c = q.type === "match"
+          ? q.pairs.filter((p, k) => t[k] === p[1]).length
+          : q.ord.filter((x, k) => t[k] === x).length;
+        fin(q, (c * q.w) / 4, 0);
+      }
+
+      /* ===== BERANDA: LOGO, JUDUL, VIDEO, PETUNJUK ===== */
+      const LOGO =
+        "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCACgAaQDASIAAhEBAxEB/8QAHQAAAQQDAQEAAAAAAAAAAAAAAAEHCAkCBQYEA//EAGQQAAECBQIDBQQDBRIICggHAAECAwAEBQYRByEIEjEJE0FRYRQicYEyQpEVIzdSoRYkMzZDYnJ0dXaCkrGys7TB0RcYNDhTc5XSGSUmJ0ZUVmNkwyg1hZOUorXwRGWDhKTC0//EABwBAQEAAgMBAQAAAAAAAAAAAAABBAYCAwUHCP/EADQRAQABAwIFAQUECwAAAAAAAAABAgMRBAUGEiExQdEHMlFhcRSRocEVFyIjMzVCUoGx4f/aAAwDAQACEQMRAD8AtSziDOYDjxhFLShJJOAPEwCkgdYOYHxhCoHYxieUHlz70EZwZEfPm5VAE/KF5hCInydfgzyIM5jALGesKFJUfdUDjygfVnBGOd4XIgpYTIgyIQKEDLKCMedJ8YQLzBOrOE5hCd4nz/JGBUFD3Tkw79h9OYQsfEOpyQSAQcfOM0uJU2Fg5SRnMFZwQQQBBBBAEEEEAQQQQBBBBAEEEEAQQQQBBBBAEEJnEGRALBCZzCwBBBBAEEEEAQQQQBBBBAEEEEAQQQQBBBBAEEEEBivONowcPudQPiI+h6R8nRlPz/shnwkR1yazXnXWS0IoNOqdQps1VUzkx7N3cotKCDy83N722IbCn9oLp08hHtkpXpJw9Ufc5boH8JIxGq7Q/wDB9bX7pn+jMQNI6bRr2t19zT3eSns+3cJ8Hbfvu2/atRMxVmY6T8FlTfG9pS6hClVmaSTvhUg4Cn4jEfQcbGlJIH3dmD6ewuD+yK0d/KA58AIwo3e75phtc+zDbc9LtX4eizuX4xtJ5jGbrl5b1mG1Ix8cx1tt8Qmm12LDdIvaizrpOORqaSFZ+BipgDbcZPxxGLqUvY71sPFO6e8QFcp9N/5Y50bzVE4rp6Ma77L9JVGLN+Yn549F08vNszTIdZdQ60RkLQrII+MfTvE5I5hkeGYqS011xvXSWoododZmHZQEKVTp59T7CgDkpAOyM9Pd3HhExra47bInLImKtcDb9Lrkk3lVJbQp3vXD07lYHvA+vTO+MR7NrcLF2M5fMd54J3PaZiqKeeiemY/NKfvUAn3hsMxyd0at2XZKc166KVSPSbm0IP2ZitXWHjAv7VaZmJWVnnrYt5ZITTqc6G33E+anhsD6QyCiFPmYWVOvK+k+vK3z+yWo5V8o67mvpp93qzdDwNfvcs6m5FOfELU6hxn6OSI92+pKb/aqFvfzRHiTxv6QL63OsfGRd/uirkOkdFLEJj0EYM7lXM+7DYZ4E0kdJu1fh6LSHON/SFvpcy1fsZJ0/wBkczO9ohpXKFQbbuCawSMt0Z3B9RtFbvyEGI4zuNzxEOy3wPoKZ/brqn7lpOinFpQteLwn6DSKJUpFUnK+2CYnFIHMOYJHug5HUbHcZwYcjVa8HbEs5ddZ3EtNMKcbPVxClhBSPXfMQX7Of8Ndw/uJ/wCe1FhVYoEhcdMRJ1GUTMywcS6WlbglJyCfn4R7WluVXbfPU+Xb/oLW266rT2e0YbRl5DzaFJIIUkKHwjPmHmI5i+L+t/Te2pmvXTWZOhUmXwFzE66G2wT0SMn3lHGyRuYihdXaj6YUSaWzR6FcNxpSohLyJduWQsD6ye9UFY+IBjMa6mtzDOMiAqAGSRiIQUHtU9OZ91aKva1y0WXTjmfU0zME/wAFpRJ+yJOaVa8WJrXT3Zqy7jk6yplsKekkLCJhhJOAXGVYWjfI94DP2QDhFxICjkYT19IXIhv9YNbbO0HtP7v3fVU02RJ5GG2m1PPPr8UttpypZA328IYpHab6Ig8ntdwrX44oT+5xnpywEtFLSjHMQMwuYilIdpdoZUZhtn7t1qRWs455igzQQPUqCCBD4ab646f6sd63aN30mvTLSe8dlZWZSZhpJ6KU0TzpHqRjYwHe5g5gDjIzGIIV0OfhHPX7fFC03tao3HclRapVHkGu8mJl4kpSPABI3JJ2AG5gOiSsKSCCCD4wuYiOntO9EVJC0zdxOpVuFfcJ8D7CmF/4TvRL/T3F/sN7+6AlvmEK0pIyQM9IiWjtO9EVJz7TcQB6H7hvb/kj6M9proc++00qo19jvFhAU5Q5gJyTjchOwgJYFxKTgqAOM/KFBBGQdo01BuKmXRQ5Gq0ScYqNNnWETMtMy6+Zt1lXRST6x9KZWZeoVGpSaDyzMitKHGz15VJBSrHkcHB9DAbNa0pAyQPjCc6eXm5hjGc+kMpxdcQC+HHSf80ktS0VipTU63T5KVeVytF1SVrJWfxQltZ28cQyvDPx11TU6xNSqnd9DlGZ+zKWa0HpBfKmeZCHVFIB3bUkoCcnzgJqhxP4w6ZjIrSE5JGMZzEFOFrtDarrZq1T7Tr1nydFk6ylxcjMScwpxxtxKedKXQrGcpzuNhiJnXdV3qHa9TqbCCtyVYMyhB+tyjJHzgN8FAnY+kLGtt+rS1epMnU5NRXLzbCHkKz4EZHz842UAQQmYMwCwQQmYBYITMGYBYIITMAsEJmFgCCCCAIIIIBD0jBXT5iMz0j5ujCPt/kh5TsiR2h++ntt/umf6MxA/wCrE8e0KGNObd8zVT/RGIG+UaZuuIv5+T9U+zj+S4z/AFT+RIIXHpAEk+B+yPEzl9VJBClJHUH7IQnBh1js5c2OmOv0EeWpfoIPhHrHUR46l/kX8Ifyx2W5nmYWsj91LWwQeUEZ2erS5iJnMiCAkDxAgz6wzHhI+ggheVXkfsjHmHmMw7pPfGEquzn/AA13Cf8A8k/89qLHUnDY+H9kVxdnSf8AnmuA5GDRFb//AK7UWOBI5Ac7g5/JiNs0H8CH544viY3WvPwj/SnTjv1zqGrWu9cpKpp1u2LTmnqTKyqXMMmYbUUvvuDorcHHkI7Ph67Oi4tW7MptzXBcLNp0OqNmYl5NqVD8w+0sZQ6oqxyEjflhleK2x52xuI/UemVJredrM1UmCkHldl5pZdbwPHCV4JHiInPwjcd9lViyLdtG9qg1bFzyDLcglx7/ACafShPKHUqAwgHbZUeg0o2l79lLXaZS1v2lfjVbm0Nnlka1IJb58eCVpJCT8oiA7M33w2apS/KibtugaU9ysyJz+eQCghsJAAmEqC8gpB646gxe3SKxT63INTdMnZeoSbg5m35V5Lrahk7hSSQRsY8dTtWjVmoMT85TJCcqDBAYmpiVQ44zjf3VEZEBAntPahNVPTLRyam2/Z5mbemJmYlyCOV1UshRGD0wpRiL3DTww1vibqNdkqPcMhQXKOyxMOmelS8HS4pYwOUgjABESw7Wj9L2mm+fz/Pdf9W1HL9k9+nXUn9oSP8ASvQHN3B2WOpVMke8pNzW3WnEJJ9m5HpJaz4AL978pxEXbotC89Dr2bk65KVOzLnkld+zMt+4onOzjK07Poyk+eMHMXzPzTDLzDTqwlx5RS2CepG8Rr4/tI5HUvQWtVNqW57jtphdSkXkJ9/lRgutg+RSenpAaPgN4uJrXSgTdsXa9L/m1pTYcEwhQH3SlQEjv8dOcKJCgnoOUnrD46+6PSWumllcsycmXKc1UEJ5JtsFfdrScpUUgjO/hmKieEi+piwuI6wKwwVsMzE+mQnEHG7UynlKR6ZDfzi7nmCUqVzEkE9B4iArO/4J6+HlrWrUuhOqJ+mqjvbgdP1byhguJfhjrHC7Wbep1YuGRuFdalpiabVIya5cNBlxpBCuZaubPeg7YxgxcjYt6U2+qW/P0oumUbmHJY963yHnQcKx57xXt2tH6fNMv3Kqf9PKQDG8NHB7XOJ2kV2eo1zU+3m6PMtyi0z0muY74qb5sp5VpxjB8859IelnsnryCsuanURplXuOFmju8xQSObB77Y7bR3fZOgGytRM4A+6svgkbA90cGHt4kONSx+Hia+5Ux39x3SWu9+41NUA40DskvLOzYUQcDrsdukA7ek+n8npJprbloU1S35ChSLUiytYPM4EDHNuT18sxsadasvT7tq9dbmXVu1Fllpxoqy2nu8gEeu8V3zHarXIuotqRpzTWGj+oTFQcLwH+sGwPyh7NCe0fsrU+uSlv3PS5ixKzMqDUsuoPh6WedJwEB3AwT1yrA9YDx9qof+Ye2R4/mnZ/qk1ESOEr8FfEj+8R7+a9Esu1QAGhFtYUDm6GVAeQ9kmv7Yibwj/gs4kP3hu/zX4DQcB3+c/pv+yc/q6ouOuWlLrlr1CnNupZcmpRbCXFDISVJxnEU48Bv+c7pv8Asnf6uqLmZmcZkZB2ZmH25dhlvvHHnVhKG0gZKlE7AD1guGtsS3DZ9p0mid8JlciwlhbvKRzYB3jf5BTkHI9IhTevacWDa9+oo1PotQuagS7wbmrjknm0MMEH3ilsjmWkfjA42zEmtRNYrR0tsgXRdFal6fRSlKm3nR77xXylAbR1UTzDYDbqdoI7oKBAIIIPTBhRFe9ydrJIIqE3L27prUajJoUQioT9RbaQ4M9UtJSVY+Yj32b2q9uT1VZl7tsipW7IFY5qtLTqJxpA8SUcoWAPIZMBPskecYcwHiI0No3hRr6tun1yg1KVqtKnUJdl5qXVlC0ncfBQ8R4eMRTrXaV2RSdY12c3b9QnKO1UBS5m6UPtplmnAvlVlsjmKUnOSPKAmUCD0IPwMLEJNZe0ztHT64pihWnbz9/rlFKYmKjLTiGJZl0YwN0nnG/VMcnbfau01+osytw6dz8jJrKS5PU+otzAZGdyWVJ5sAZOxPSAsIK0gjKgM7jeMUqCuhB+BiO+o/G9pdp1p9SbrZrBrqK20qYpVNpuFTE3jqCDu2P2QGIjg/2t0wXuVvShbKcbtu11sufaEAQFjGenr0jLMRw4buNKyeIiaVSWW5q2bt5OdVFqiklSwASe6dTs6MbkbHAO0SHefRLMOPrJ7ttJOMeUB6YI+bTyHm0OIUClQBBBj6QBBBBAEfN3dChkA9ATH0j5TOe5UQEkjwX0PoYBh+LLRmu602RT6Tb7si3Oy0+JpSagVBCkcuNincGIeVTgy1apZ5UW4xUANuaTqTYB/grwYnc7r5bVJqczS7gTN0CpS68KanGcoX+uQtOxGI3crrDYtQU0GrmpqlrICW1PhKiT0HKY86/obWoq5q+7ddm4t3DZLP2fTcvLnPWP+q21cKeryFFIseYPoZ1j/egHCnq8o4/MM8PUz7P+9FqiEoChy43GRjcY/wDsxnyjyEYv6JsNn/WXu39lH3T6qnKjw36pUxClPWFVlhIyfZkB78qTHEVm3qtbD/cVilz9JeOwbnGFoz+TH5YuYdQkoVlIUMdI11Xo8pW5B6VnZaXmmHUFssvJ50KBGCFDxHpHXVs9FXu1YZul9p+4WqubUWqZj5dPVTRkFOQQR5jpHlqv6An0xE/daOByi3LKzVVsst2/VwFLRJlWZR5QBOOX6uT4+EQNuqiVG3ajM0qpSj0vVJR32d+TcRu25nYAfXz9X1Ijxruiu2LmMZfV9s4q0G/aeqbM8tcd4loSQAcnoMmPrJsP1GeYlpRh2Zm3B96lmG1LdX8MDH2xL3h24FVXLJStwajoMpJu4dlqG0SHFoO4VMKHTP4oiblnaf2/YFLRI0CkSdGlB0Zk2O7z+y8VfOPUsbdNyOaucPmW6caafSVzb09PPMec9FT9N0B1Pqx/OthXCj/vFyhQn+Mdo36OETWMf9A3/wD41j/ei2dLTfUoHxMef7pSAVy+2sZ/1iY9CNus+Wp1cdbhVOaaYwqpRwbax/8AYsf7SZ/3o98jwP6xzrg5rblZYf8Ae1RhX8hi1IAEeBhcRY2+zE5w6quONzmJimKY/wAId8InC7eOjF81Os3I7SzKzdLMmhuTcK1JV3gVg+HnEwkH3E5O+I1VSr8nS6rTpB8PB+dUW2C2ypSOYDJyobD5x71uoQ2VuL5UtnKnDgBIxnOT0AHjGdbtUWoxTDTNdrr24X5v38c0/Ax/E3woWtxKUdr7ol2k3HJBQkK5Kj76z+sWPrNnyitvVPgW1e0zcfAt9V2UUcy1VGhJD4VjqVs/SSMRbHYetlg6m1SoU61Lxo1x1CnnE1LU6cQ8tg5wdh4ZjtwAQNsfLpHawFBtjao3hpJVFm0rjq1pPsOffJNLpbaBH1CwsAEZ8EjxiffCr2jRu2uyFoaotylOqM6vuZK45dvuZeZeJ2adbP6Gsgjfodj4xKnWTh1091zp65W77elp+YKcIqLQ7mcYA6FLyfeGPIkj0imXWnTZzSHVW67KcmXJ37izvs5nAAO8Qptp5BI8wh1nPqCYKnT2syQm3dMwOnt88euf1NqOY7KD9OepX7Qkf6V6OX4yL1m9Q+Fbhzr9QWp2oTbD3tLiuq3UsNoWr5lJPzjqeyh/TrqV+0JH+legYTx1AeWzWbOU2PfNWS38i2cwms6UTOk94oJ2NFnD9jZjqJ6nSs9Myj76eZ2Td7xr0UU4/thjuOHUuV0x4ebpfcfQ1UatKqo8glXVbjw5VD4Yz9kEVDaYuKZ1Bs1cvs6iu08px6zTYMX7kAAbeI/lEUbcLtpv3lxC6cURpAJNUl3nSj9TTLgvLJ9D3Ii72q1FNMpU9OugBDDS3c9QQlJI/IIBteGZYXYE7gYxV53+lVELe1o/T5pl+5VT/p5SJm8LSCdMlvnZMzUZp5I9CuIZdrR+nzTL9yqn/TykB9uz3vpvTXh91tudwJIpLiZwFf0eZDB5R9uIiXptaVd4lNaqdSpmoOGs3RPKm6hPu/qSCC45zH0RyhPrmHv4ff8AMZ4jf9bK/wD9YjdYdp3Pe9wsUizpGfqNxOIW6wxTnyy6UJxzkKBHQEQXC1ai9ntoZSqHL0123DU3EtFBnZmfV3rpP015z1zv6RXbxYaAs8PWq0zbUhMuzFvzjCZ2QdmD3i22ebCiVeJQdwPSPv8A4svEKULSbPvwZV0+6TyudPqQ/HxnuFHXWdWFTWnt0zykjlbM28XHAPBJUpxXu538PjBD2686oVLVns+NLKvWll6tS1xop86+erjjUtNJCv4SOQ/GOA4SfwVcSP7w3f5r8dzrppRcGjfAPYNCuiWbk627d5nX5VtRV3HeSszhCj57Rw3CT+CviP8A3iO/zX4Dg+Eq96Lp1rpY9xXBUGqZSZHncemHQSB94OAAOpPQCO34peNW4teu8o9G721rAbytqSWtQmJ4b/fZkp3CD9VHjneGEsa0axflapFvUCnu1SsVFTcvLyzKgkqUUjJKjskAAkk9MR0XcV/QLV1KapSWDcVuT7bz9PqLSXG31IORzA+6pCk5wpPjgwcpSI4VeAaq6tfc67L7lV0GyiEOy9LUSJypIHQKA2baVtgdTHCccmrT+oWuNWprUwpu3bRJpVOkQcpQtpIS+vB6LzhGfInyi1bRHVqg632BSLwoK+SXnEcrkq4od5Kuge+ysD6yT+Q+sUe6ylxd3aluP/oq6pVgrH4ofmIOKf8Awz9nPatWsGl3HqUien6zVJYPt0yXmSwxJsq3QDy/SWdiTHGcZ/AjQtIrEm770+XNMSNPWhdVp00+XUtME4UtBO4IyIspoXKKNI8n6F3DXd/DkGIbjiqRT3OHLUdNU5fYDQ5rvefpjk2z88QEDuzF1ZnLd1XqGnsxMvO0Wuy7k7JsKP3tmcZHO53Y8Eqb6jxxEQbyOLzu092XiK5VfvY6r/Pz3u/OHb4HFvI4rNNVrUpTpfdS73f0ecyy85+UNZcn4Rbn/fJUv/qDsBP/AEe7L+1J+xKZUL+qtam69Ny6XTLUqc9lYYSoZCCOXdQzg5iO3GfwpSPDHWaBN0GqTc9bdbU7LtInR3jss62kKKecekXAy/6BL/6sfyCIS9qsT/gitHf/AKQp/ozAQy4TeGuY4mNQpumzc65Sbfpss3NVSclf0ZzmVhEu1+KVD3iYmlcnZX6cTFAfTb1cuam1ttvlYnJ6pCaTn9ekpAMcJ2S3+Xan/wDs/wDmuRYsOsBQTb9fqukmosvWEPGQrNr1Yl1KPqrYd5X0n5pdbPmDF9slMJqFOl5hI525htLgB8lAH+2KDdcvveoeqf7vVz+tzMX0WxvbtJ/abP8AMTAclpFVFzlKrdOcdLxo1YmJJLp6qQlXMn7ObHyhw4aLRQ5vHVDz+7//AJYh3YAggggCMVjmGMAgnfMZQQGmrdsUm5Ed3V6bK1BpH0RMMhePtEcbPcP9hzMwHk2+hh0HKVMvONgH4BWPyQ5cJiA86U90kJHyBVnA2EVucWVKq+nGtlSl6dcFTYk6ihNSl2BPOJSyXFK7wJ3wncecWUq+kIry7QL8NlF/e+3/AFl6AbC2eIzU20lNin3jVFNtnPdVF/2po+n3wHA+BiROlPHsl59mQv6QbkSpSUfdmSTytbn6TjZ8PPliF/UYO48oDuN+Y/sevyiYiUXGUqsSNxUtioU2aYn5F9AW08yoKbdB8lDp844y5tCrPu6+6FdtVpYmqxSSe4eI2Uc5BWPHlIBB84hJwl69TOll6S9CqMyV2pWphLCmwDiUmFkJQ6jyG4SsfOLIeVKiVJOVBQPzx/dHGaIl3Wr1yzMzbqx9GDoaZaUtxSUNpBKlK2AHiTERNc+ONi3ahM0WwWZaozTJKHarMDnaSfJpI+n/ACQ+3EPblbujRS6aXbrq2atMSp7kMq5FrAIUpIPmUgj5xVOEcnuoSthZJGFjkcbHRSSPMRz8YdLqby1SvDUJzFxXLPVcu/qDy+Vj/wB0OVuOR9lZ/wBG3H2O436QYg5ZmYxLfWpfNx2JMe0W7Xp6hKHX2V9Qb+afoqiVehfHNMOT0pQtREBSXVBDFbYTy49X0+A9Yht4Y8PKDrnO4PX1gi52TmWpyUZfYcQ6w4hK0ON7pUkjII9CI5PV2zXNRdMLttWWmly0zV6ZMSbbyfqFxtScZ8ATsYYbgN1Seuqy6halReMxPW+4lcstf1pZecYP605TEqk55RnGcb46QFDLsvevDvqg3LuLmbXvGgPKc50H3iM8gUAfptLA2PQgxOHSztU6cxTJeT1DtSoiopPdrqFBCHkOqA3WppakcmfJJIES51r4eLF19oqZK76OiadZJ9nnm1d1MsHzS4N8eh2iIF09k405NvvWxqI8hhayW2K1IJeLKfBIcQUqVjzO8B0919qZYEnJTCbatq4q1UwhRlzONNSsotZ6BSu+UonP63MV53LXbh1v1MnKi5L+33TdFRCUy0unlU8857ndpGBslHLnboiJp0nsn6m443929S2PZUqyo0+lnvB8C4pX8kSj0E4OdP8Ah8mDU6TLv1e43Eciq5VCHHwPJtIAS2MdeUDPj1MFRI7QCwzpfoFoNai1pdepCH5V5aPoqcTLtc5HpzZhneD3icpvDLWbqnqlb83W0Vllhhv2aZQ2Ultarx/WJrzV7L1vrZNSxUMSLtuiq19mYQW+xS1zFOvaPT3wuADEpTvkpTM51mI+u3XJSZlHabcM1tmnO52Va2yE+hn8AaS7++ZJGnhv6W3Vp1ryyNQ06wn/QU4i/LcmhuHSkKsRKrSXIOVYNbLNJdPcBWqbQtT3bdOQtvuTpE4WmZcFR6M6OIVcGsEMhRa8ZyjC8RgI57+gbqpetYN0tQ6+ijUKbLTppyYS8wvrBa7ZLN2cI2Hy0xTfKu9ZLK0UuOZmTW83KyCS48+6u2Ssi/M5mtCpjWhg6UEHOyUJrzOkTKPyxFc2ZNcuxHGO01WW1Ra1Fh5d2h3kn6g7BE6mNXH4pmQwnxJyN93WBSxztmvcrEPP6bpSVaPylG4nH6nyvh2TC+rGBIcO16/hnC3KO8nT/xlYhvOxZcEwolZxdmyJlWCu2pxoSzrVdqFH5nb1hfnxBTAQzBhYPXgiOGmlCjsh2gYiI9GJ5RSRyHAGpHXG6v8JL1GvCSY4XtP16mUGuAo6+fTCR68igsiZ0s7ZwrBwkQo+N2zbT1Jb63Kfp/G2u9rKh0y57hB9ioxFUG/hUWpvPtOXcBtT69AWDyTrYSflknnXlYTM0K4dv0lTcRuWAnmJkcpXVJvwCNmJ0UVGgGUm6Of4K+uSTztmLZTHrf3QcWb4wxTn9VwiFftWX50mMBBAmgJPDvtFWFsDpXxZwQUUeMQgJHGP0IXHQOhhjBzjMkYRCxSMkYU4EMQCsQJ0nB4ybQWWkqwh7xbhbaCWUhwdQkMKi8FL7U5K4k3v2kKrpYeemErOr6jT1n+GIzLthE+DLiDiLV7qTQ9IU2yDlU7FKRVSJhk0hXFdTYWChFMEFbpjIVHJtGi1eUa8RcSe3DDCkQmBs9MRwEcm+8lyJZ2qOw0kd9ZK+YkTNBGDMlt91Rqe16D6KL5fRY9SYZ4RnUGOH5JiEILmGPUlRKIxYRrR2pKqRmahUOjmbiUMHYIRNoaq6+4Zz11VyvpfSmZMvpiIz1psaJsuXkSSUZK2oqJDOgoyLsHE9dgGDVrbVTjnvZPnQKjOvOBUh2WGoajVr2R0AbhgGzy0d+Ys/azxHLgNZhyuq2zAgjzlmmuZkWkpzuP8SYHr6oLsY6hQiPSZq+p0UXr5cEPKRmWVL9RotMBJkuzvP4+y5qBaLOVRdQ0sLWL8e0NtCgIfVd9CVF22PmqNvMOBcjSVzPo+DlQWXE5hYwQoIXqR5E+yOLYGZv9fJhrbRNwPjnbQ+ORjcEPhrvklkuz3+BKDTLN8I2zu5bB0X+EZ89G4nEw6G3q6KS+lS+8t0UVBqgIkQ06BQXzyJgkEmANpmWWHN3xKnzp9IRRu6utlBVp7ZMyWhGJWqlFi8qvo7NVtALVC+p22tOEw+4CqvrKtI5rVIo16UaavqDbD2lN4TtLpVNRRKTdUnNrTtDOL65L4WclpDBBLSMhZUEqRIEgfVRn5ObGYRcRjQ1DzsQlLQf5MhNVTCBm1ap02pLUadQqlLTVOcLTso2RYcRqUFNg23qoFAL4/fMfXpMNJ1ULVHYn4Ql8H4HAxNKkmGqyHSVpKm5tu3tF5Npo7VoSqFgUBalOgBW8HOVSDnNj5xTmP0hx5uV6j56FxHLEoi4Zl9xsvp7/3lSVYGCsHHXHgfCKAIbmrirOvW/nZZYCV7zm0iMUgUDtX0ZSTfL09P55ZWNKLl76+LxSVXFhbafT1HsXLNAnJZDhOXsnoMOMDTc8E2H4SPXkp6+rL0OzAlbo96a9WV1x3PiWRmtkhJTnnVyf/bl3tWdCfD/AIDbSnT3YEa2HY1sJ9HaHZwLmMNBZ8MqQDkBXFJXoWntbU7JajJWbg8krFBZSwYYHGnVhBbXyJAxhGU5d1F2pz7R+w9ttJKEcJ3B4lX3WSWD6XrWI/B3lJ4ZNWoI/Vaz7rdxVlElbRuRPSuxJypT2Y4KVQCYW4+n6bdtwkpUMGnKJF6e1AzJvPOL4ZMSBMEEGUHzQkKBsOLzJqVTy9W4llQeoaVTspKlBTCcAOLmOQcxCSKQ8zQnrkh2WKPJVfJAYeUq+Ma9bkltxbuF7Q4FkNS00zu7VfI3Jy6m/kdX3Ejs/Xs3VDKaTRqlQVKI3AUFLWdDx5jp8jZKi+PPKD6Xe9+6BrKS1ODdUO3W7SZwhMKXpfSgRqIYTnYWKEOKEoJUQYYYQZiYhRLxV2WpoJ2LKDRXuSBrAFkeUN5eXcIK/VfdlNp+oSKnLrQ4i+TJvb4yTQ+gIWwd7yTZh84MlSh1TN0NyeqEaR8M8Lsb7rkLqnlcaQJv6pmkVp+0dcUCZaZ8P6OFYgs0JMZeh7LXXiFOHCRsGnVCvl4VGFnCSS4q8LbRwFTVHNDfcMTLZrt6hRqmMxNqq46fOSk7fiL8dFE6CbPZXZrW7FeP6MxBOb7XOpC4ILRHa0WRczrjpIuYnM6aCNaQ37QUoG+h6U3I5oZlI3+MStXnXfKN/zSkpm8F5HJvJYh2UXUOfE7z6S0q/g9rXzZsJh4fCvWS5DlDXRERT1WGGUzFUuqmKvF3jYUUDjCUyuVSqAxXKQNdQ+8fLTHqN9WoHEqlWSQs5QOQwzBDWtSKuOkLNYQXPt8qUApPxMdKp5qWi5Wq3PJk6VAVHKGV+AhpLJD7LGkNJYJBeYm5afkiGikLvOl8aqQkoqFR05fNlGHgjzVjqE0Dh1pCDBAJn+Sd5XyCT0aAeHZrGXN6nuNDBEPhxRZCFqS0bWx0KI8eRgPQ5G5KLH/wC+VMOCyMTMmYWrO1PnJBrEqLaNnuYIQQtJKGlnyJOmhZtDFa1d5qu/wDbCDCotzzTgbXzzGE0Cg1CpSiqFJW6D3k4Vsq6N7Dm5klBBbuAiVQ+eYKYU0gYe6S43EvnbHPTGABqwtQxFVIqHOfMHKyXDwr1KmRKtfOx1EAm5RAtZ0+0LpFf6hTrXc13mEMsolKe4VS2UKoNQEJ8DKbkkAyTqElUQqEAMBqBCQyjrKQOFPDeoUE9ZsovG2JygU2YgkXh7mqUyW4o/pIRNJLvPAG0qgCKqXhwdNxhnKvdjPLhbIpUcvDS94omuFp5OnZk4w6YbNt5vuRuoaU69vIHmNmTCBEKfLtDKYgIl4nL8qpxXr2k7vVFxx6zm5QyPhWhZ0UQgmuNxE+F8Cz1jILzTNvxLqD0AjqKKLb6Rh0nqfOHwqNm1xdEnlTzP4dAoG6HR8lL6mfwu1NCb8vj3BkV9nhXp3XRGlRFNjN+TK4o5xmjlXSqVfLNCmxwmGaCAMKGhIRt96U0HpHkAqPXCpKU5bpYb3FNNUvW5DLXhd1SWY0c8CkNI5bMbHKQI9Ze5uE/iBsPI4qpQbfpqBMYTjsHQAg5JIN2LY3rVFDEHmZc7WqX4R5x03N0ADBSsjJPpqNlf2OrDlkWBNJ1jfAGbc/C3rlHX7cSRO9ehJNqdy4P00lqPg7fE5WqEVmGrAv5Bt1lXFEBT2C3h7oVnGhjG+bu1/d/i6ZYnPwYR0Hgi9iNXXmqQZ4jqX/f+nf+/mt7wcnYDsAFBBBXy6cWdHm6nPJtWl6Zh5YwKXoKq1DbIOMEDUdkjSgyRwi5iQ0qGlqTwc35pu0Fe4hDLQlEiF4ZMwXI4gTk4bdw1LGBzn9yP6kg1ni/sV1cmOzrwXtzxUA4Do0iuAqNRI3aNlBN+UH5sA3NE6hlF8BrFWPN4G+JUoLpAAHEGe3WTlW8bOm3gQ3VK5plJNbxpSf3uOGbGYeZeaz6kVSMkJBIAdIPeG/xCoTvY8QvHQB8A5IJbFAWKjiBb1fZ6dqObLqoyyA7vEBbA1x8wk0f5eBfEyMXVDT1iWDyXAwDxZ0N7aj6hHFLwqNJC4TgsmbXkkcNzVd03P4e9TGC4Z1sQI/tb91IW7V7SWOPnkA/j81lXr/r8b0kB2tNGhGEq0XLLRWwdfCwtSOxqYJEmO5ZXXcHMrUGnnpGS0Ewp7P9wEQu/CP8AN+YdIEVhtiUXoqR3aVK/XQRj2zNpAKxWS3Ezp+nGkWSUMaZ8oFR5YTqmrZ/h/WJDx6gdQ5RO0VZVWBj6XtHO6lKllpAGLK5QhrnO8qFz2LGSMrxgfZEy6HpGWRYI9Kwc9UWt6hRPhQTC1OpMBMtFDcsMNa4Pq0rW7jEJTrqj/ANhpwZ+7Wq0kRsoqpHrEoQoOe6ke5SKCxUUjCdKEBQMV/l5U1TS6oohilOeAXLUDxOgXGFLWiKp1U+gkmVODaKZeSaDyvEq/cpVJWwNjEi22qmhK0ALnGZrZrrSqTkkFQIX1P4QYgVaGtZnSC6Qi6CkCwGlPT7dtSxoqHB8L1OXDMJyxMVCZnZgiS/k8vz9x73FFdNsUx2i7qcmbdZt1YqG1d5tfJpM8FJM5YY/Bc/Ul+RvpDt8OhY9wy1qaHCrFhXApZmZpFxnYxLQhWG/+pl1XTLA9PaWyQEZ0A5+LEHNS1MmrzxHDtMVOWJ7LF7Gn4cdWuSA4tYjvGQCCsLiUhLWhjqtYB9YHyY7lsYZ4FcQBzDuAMn+VuuqUVJ0cmtn14dIHN4Mi6KmXrbJIUXQGoTrvDSLqtOl3Pd0+k6H2tL+MrFGnZOXuS8Sq6mHJ6ZaSvTIFQSV1l9WpYGHVtB9tPLpAkE3CKJ+/TDB1gVn2Zex1xIgIJT1WMfJJPUtpAR3RvDqfqAfZH2KfJKxD64l3lOCEtJw6uPg/rEglh5kBKmU1S8Zmg1MkGGJtGhkOEWz2fdw3tvPVDqWr5mhNQWlbJsr8Qmhd8Z+J5Wry8Hc54YOGlYC0x6Qta/Z+u/AAEjAxJI0dFe3ZNo0tvnp8m1ck4dGVsYZBBaR2+RNEiYvl5yq3FVvEJXVHWcSSK1+HLR8Zbgc+TFIK47qP+6a8E6qlKLG4cLbJIJyHDT59nwUnnPSYv8PmPh2zNdkU2fQX0kYqCyDWDUsqhQBJA5hqq9CgBb3iK5NiVdxA4JUFfX1MsOcQlddJb5N3s/WjTEzTUH8M7dUc3PTDvBRKGCpP36IoqNYHjBUbDX9CyHT5cNnOt57EOXdOYfsBqVEjYF8HlN6WKtYlcpyTV1umMGhPTCjxIT8Ia+iZsrM2RVvXfLEAnQjQ7AcIKbpqCLnrB29TLsAmhpyoQd/JfUrAATV+JICiHlB+gGmO1gbCvT3+ICnawhWs/HpwQKKx3zdXm4pJ5cMwqmZMrnLuNwzEP8AAgGN7eo+L1TemmD8q/HoK/lp1RpaYupgLmJJlBw+wA7DNSS1yh5p7MsXqvQEfkPKqLqKQRzGVuB6eWAJWxSJWMZEJHVjqxv3WvGsAAGPFfijlZrT0Y+mfDEvTCUwRUmOZoJXgsFvIoKm45hCVgNp9PeFOpMLMQ4CIUwaZjmiVLB6WWoR8jG3dVYCP+TK1L2BIP4f5X3Gm8TpS2IdyEjHU8wWjT5Sm07hQhpWyJ7vL4B8YdcPrYSLSxzSgT9wt+vMzwSbK2OYSocuapxoV8wDJ0A5mo2UKnV4tYWhRCCs6jXdg5oNKWr07GWg+0WBR/WXHHGW2lCDAhyyNWyAHCHk25nDFgjvSxnrFSGE1jIfDXTRM5oqfZMB0UEkhBB7ov0vZGXRxUo1jXfy2rY/IxUPnH0N8TFhTMa71RpvDvZNJ6r3k31o/tilzx6KbO96ZU1QlFtZ4yDrAmFB9OHTrS57W6e7uHlNxFsFp3Kr5lzIpOQiUJQUeaRiJ3b9nIYp+1CdotU1BtemRqPmwX0AbYZQ0WqbmDQu0yGKJRZd7pSPxLCfzLSAZ1MiKUUuGsAPy/LCgJuE/cz6W3RJM+bq8HfBS4ogDg2l+kvXq/TTgNgqgzwypYQNKs8E9jz+vUDQbcoZMm7b7mHplYASn6qDpw4tK/pHMPDa+qMSiEQWFMq+eT4C6IGBKf24HPqpGA5htdrXV6rw9dm6VDQpz2T3VwWXlxS5O5ll1fKFEW6pXpDhFL3gVhYkvPlPVTW/VISRHZUrqOxdRupzGeNxfAAfrKeDfLEuVBq3jvlJpXO7oF75tQ6WWc4OxO5cY+Cq2SVrc/4YoCVBZ96/zdvXFB+gzeRK50xsJPZ2ZYhnEBwYBXh1uktHeJ77kLxO3Uq2lHEJHvYZhVU3N+y3OIlhwtg87QJpcJz5nORG2PlIOUm0Hz+TXuG0fnI20YZj0AFW4jpZIpDVMr6pUZoAKvL89ocnrr/j2hrzFvUmmK6NkJPV2ZnLqr6jU9sTL5aS3iyoeZgMA1CcLTsXM0zRq3pAGHtfIFc3P3Ym5NVUHQRx70GHvlV5OPH3Q2OJmBnAChEmS6lYCLUZBL5K2B2bpnPCtCoXYbSY2oVJTZqtcwzJFgmMVzAmd7QNyyqrdNzbxQgOlh9DHg0LJAUv89B5Q1uw5bRPRySl8ifhQWrIq2kzgTpw5cYOeW5QZrhS8qqmY3qe9mzhhUD8Jqi4+0BxPt0Wu8Y8D/CrOc4NnR/Zfl44mX/d+EEbMPmN2k7XDpq0KpLhPTAQqNpunr6FD7LXMmSCY/OP1uCq8i/aYm0V2GKS35qmjiPSxV7GNy27yTB71Zq8CVC1+e65ALZ+t7GaDlXYlabEAsGA+Hr7Mt7JSzvCAMPQ9ZvPAfTFfP9P78YAFsOmuIeqUtvOzIpFDoZRY3HmKPEiIXOWm17RGNFT3apC9JKHRSbLRN4a3IlrRRKUgbVy4JTvdA4rvm82Pu0T9ZsJEm4jVE2KkPCvuHHdkD2gFKL2WZJtAcJmbvnyu8cy9WKanHCQ6zzRfd8gVF5LGAg/NVuHpF1WpPFIrrfcvVBzTpJUx7WRZmTy+lQCnpLMPfTcZ56T56T/ggDl6eT/Jot9/wCmVw6fHfdI3zpXpuNlTH7Gjmq+ZbyBWcYAy/N7z0hZ4EamA2PgGuNpt6rWOkZ0/iIM/DMdNS+GnuLwB/4uVLIFPnYtOCTTmN2KzpBb91S+7C+iBwm/Lnl4nXAz4eQdRhwK5tETplxTI2tr9axZzCoKlEgvsB6DtUktOz16hCwvSVxJNmvG95nzOHplqrKaFHl+/2qMgfdnKHo8yQkSqH0bjtxjUJf33E4NNNY6FzX8jVRyN0QcFBwKUDnGwJBOYSAU7t5rbIAFwxMcDMaOfIyDeNOlvQXAJ8Z1S9gQzBq4/OxfM3ZS+IIGb5qI7bHmfCwAZ8OpCoOU56ETJhOYTTF5Ml0FD+aqdAIWrDSh8nTSDvjXfdIgZghI+ckoGhFj5p1gGCRSfKGqoltJVaQyl/wrcQUUyiENrVOy0zJGATCT1AmtvBGB1KXKDw0kzm9UyrpHv4WnWnFxsH1VzSQLEz8mNpTm0WYAlLkAAA3fgU5Xk6mnbUiunk1NszMYUH7M3Bc2swwdTrXoFb0pkBPPklU0w2n55vHVyD7NFVgq3Y2A1+NDP7s0bWw+ErxZYfHxbQV4yQD17fHtwUx9ji4fR/iVZbH/bhHRH6WXdbtJtC7kdJ+zwtWiFqrn44eapaZdhvKTUElZJEPnj/4+8j6mqsQh9tPiWn/1EH+yPkuvFw8vThA0IbBzjCpjK2c3IhYaS3e+TfKyJbJnKrj2yjXPOZbGxQbJYUkpvZwCx3GZ8ZOnZXQj+kFwKuiCfVUeMZxeUpIzmhGw9HeiNyY3IfU3Vyj6e39yTJcGYTDi50kU1tCzj0JMT1GBWqHkWbq5CYyJ6DWz2bOhNJAICAyRu8vFqfcq1QhNpFYnO+TzBKLKP7YmPNLcH0IxVxNdDkjlakmpq8FL8jZUV2SWTQn5Fk2MV7bkMZmE0CopZ5tjRbmI6mQy+Y3TmCpfxXXRpDjZwDhWvo7ESdHKXG6enVvlwI6aMwWUtI59DfJbZCtcBQbEzOFdDLVbjhx7qjc1I8rcCx/8HfEzI9pCaHcq9E7HrP7YFEoC/jRDSBzMCf4ptlYyQOIoRZpEQ8TFAyPWS7lsrKEFQ4d9OuSQdq4bAsYN6llUc9ac1YXcqXqVCR3JBGmxQUGrvRM4w6QmUR6JVc5MxvvRJh1ZUjMmEdyJfLQGEYeZ0ReD+UVKj7bA+G4UXAeW45QRmqSlw8lXnJVO+JGbgZXTAF8tPHpDpIgI3PJB2b1ynhLg4LIOCTkxBTzCGMzQkQvVNSH/MwRXVECGXC1AyLBVBkHRZ6/GQoGPVmHdmRoP91PrWwFBo5XVN/TK3FDyWEFQ0VC6BUtYjXYLkP6JTsqbDZkWpbhr9YpAdbnMiaIKAJhEBq/qvJPMvCSPy5JLKRdLaPVHQ1PtyaJCZ/hMUQJiOXv8xGGSHTVfD5DfgkTbRaFqqg8B+aQGHJ1d8TDcrQOe4ZQo+jDLAVRZXgFlS5KWvt00q5jKAhFZrC5GaK2wiVAnQ3F7e+sRSuWbCSMArdUlg4A++Z0KDk8Z74Z8wGPHdTlY6BLpzEYUdv0NdRFnPDvUnZy22lGZeJNJvwTFyZc2WcIqbzNXH/BfOYdXVZgbwcbxEPS8o/KxspPU1h6nt0NTWqNi8QDLvC8TyKYhh+2LGIk/lHc6B7ZqVqq5EVHgK8mb/AM5z1wLo5/QJdhPK9jYyU2xvTUJlKKJfqUAEkNHQGsrIZfX1GiXZO8lWmsHJqqkRqBp0jRlF4u5GkJ67q6mlmZD8gXY6UJ8Hp1gFSqWk8dGVDK0b3qOHR9RcfpeDl1K9L5AMVfV8o/BqnM9ZV7iIwEKnpwgZaoJ/XxlfN8XYiiXGWMlTM8Lm9LG9EtuLA0XS0D8Vjzm3RwOuq2AMvmZ8sFA4cbo1QZZIVKNiEz1hCOmEGZhcmqE5fL2+VxxlZ2qPc/xCrklZXB4PpPqPXCWjiXYcoiIq3gHNFFW1Q7xdPjgchEbpL8w8JZYUXQTfAHZEq4gWh7bHqHTQg+6xOeLmg6PElWvrqpbi4iHU8YXvJnBVJq2HqXVNe+JpAwiMBHl01jCpyQdXj8vQ4/DWlU5PQ+EPCbRdYlS+EEClhHXuA2LGaXTEQ23MxTcxFNFzp0TxLFdM0YyxsmgWaSktOkAvP1pbKVBBj4HLTprjxXLTpxhYuFbBNFlGRSJTkxSUMNLqlXabcHgz9XHr0YBFLyAR6aHzMe4FZYLZ9bNzhyIeKZxVpHDK4bllvEMvH8IycGeZUOLgbAcgJ4nUS2PTkNUDcPRtGq/F9HxOb4GBWT1ZgeBMsp7JTjgVGc4ESBMwyQZ0qmDZhjMQwGr60QGlhK88TEFpFz9+QbaSjTLMjhZxAEMI5S3CNWdQ8JbCpzSJMkYr4kVR7GJj1iTLrOMcD6Wk0wNvQObEMxJBSB9I/Dlq3IrDH0kZUSUDBmM8cw/V6gpmMAAAfxpg0nEJnaPXjl1MBHJsDxM+RSOWuHmNSIVNN9gGxoD0awMOlHaFLZPY1n6tJoD/WQTaVhNlgvqyGb4SxVgcLOZhFIw4ou2cZSVTSUEOpILfZvv4OfwO2HzH2Xpjd3ZH4YCdqX08Y6LSsZ7ToRx1KMCXC4SgyKJYKyfs9PaAxJ2n9dExVMQi8JHHkJg8+hI6RJgHrdXzmP+O/nkcOCEXfbMQIaMBh+nI5RSHX7ExLLyp+MFAuW6hvsl6hfzaAn6UzBXVpwDhvQA2qm43Z3ZyDOpKYeIkRaA+UB5Vl9ThkaxQKsZvNPaUXqSJqTt54BhDM+mXgYjawRISfBHyHSAvwQKQV1Q2NnL59NVmBqjrZgS0wE4oEXMC7pBfXiPW5XVhtGGlVvLCWm8o05NzT0A5E9EblhwO6jXDuRhlOZAjkxHpKkNBo9NICMSNSWbmZj85P4cwP8cOzT9+tBTyJN3q+KLYISLiQXM6JTaNklmqLAVy0sGxxj5cMSGBbBPLcvnAKp5BnKQ3jEtrEm1Q8Rg1V0sd8dVXa4tfAZGFjA2xuwIC9mA3T2sAC4D7p0Q+7P+Unr2j2Lp9k5bsS0sw6V8Y/YJ5aYTClo4x3y5q3AC6J16FoPwm9YAz+j2Fgkf4Nn4xBqD2mXJqwRnhP6NMzhxQTSmSKW4xmmnW/IOGEFrsXhUyjkRqLhCdW+fDnxFgrSBH3aS2WpHfqvTBdo2K8iI+TovK73Ty4+D0ADHBB1qGoPCA4t0DSZpIlkhXIuKlg1XFVEeqvTfqzTzZf56ElFmLLiGXYQCA8TnG/VMciLRh/Wi5uNiVmrRBqN1W5UEiKsE+O2sjS1wYW3d17kbvhHB5qkAQZYpLmCjm4GAT0+wmuIDvdFoEA1UfptDJUHMSCiRl25m+Z64ZLmqtxEWfplB0Qtwq84DYU90fbb3QxyAzIVzvZn5SB6xwWQ=="
+      ;
+      const YT = "WstP7C3HA50";
+      const YTSRC = "https://www.youtube.com/embed/" + YT + "?rel=0&playsinline=1";
+      const YTALLOW = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      /* Video YouTube diputar langsung di dalam web */
+      const ytCard = (judul, ket) =>
+        '<div class="card"><h2>' + judul + '</h2><p class="meta" style="margin:0">' + ket + '</p><div class="vid"><iframe src="' + YTSRC + '" title="Video pembelajaran hubungan antarsatuan panjang" loading="lazy" allow="' + YTALLOW + '" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div><p class="meta" style="margin:6px 0 0">Video tidak muncul? <a href="https://youtu.be/' + YT + '" target="_blank" rel="noopener"><b>Buka di YouTube</b></a></p></div>';
+      function vid() {
+        if (MUS.on) MUS.stop();
+        if ($("#vm")) return;
+        const d = document.createElement("div");
+        d.id = "vm";
+        d.className = "modal";
+        d.innerHTML = '<div class="mbox"><div class="mh"><b>🎬 Video Pembelajaran</b><button class="btn red" style="min-height:36px;padding:4px 12px;margin:0" onclick="vidX()">✕ Tutup</button></div><div class="vid"><iframe src="' + YTSRC + '&autoplay=1" title="Video pembelajaran" allow="' + YTALLOW + '" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div></div>';
+        document.body.appendChild(d);
+      }
+      function vidX() {
+        const d = $("#vm");
+        if (d) d.remove();
+      }
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape") vidX(); });
+
+      const pp = (x, y, c, k, s, ex, d) =>
+        '<g transform="translate(' + x + "," + y + ") scale(" + (s || 1.45) + ')"><g class="jk" style="animation-delay:' + (d || 0) + 's">' + P(0, 0, c, k, ex) + "</g></g>";
+      function sceneHero() {
+        const ray = [0, 45, 90, 135, 180, 225, 270, 315].map((a) => '<line x1="0" y1="-34" x2="0" y2="-44" stroke="#ffb300" stroke-width="4" stroke-linecap="round" transform="rotate(' + a + ')"/>').join("");
+        const cloud = (x, y, d) => '<g class="cl" style="animation-delay:' + d + 's"><g transform="translate(' + x + "," + y + ')"><ellipse rx="30" ry="11" fill="#fff"/><ellipse cx="22" cy="-6" rx="20" ry="10" fill="#fff"/><ellipse cx="-18" cy="-5" rx="16" ry="8" fill="#fff"/></g></g>';
+        const st = UN.map((u, i) => '<rect x="' + (252 + i * 48) + '" y="' + (150 + i * 20) + '" width="48" height="' + (156 - i * 20) + '" fill="' + (i % 2 ? "#f9a8c4" : "#fbc4d8") + '" stroke="#be185d" stroke-width="2"/>' + T(276 + i * 48, 172 + i * 20, u, 15, "#831843")).join("");
+        const ticks = Array.from({ length: 21 }, (_, i) => '<line x1="' + (30 + i * 9) + '" y1="196" x2="' + (30 + i * 9) + '" y2="' + (i % 5 ? 204 : 212) + '" stroke="#92400e" stroke-width="1.5"/>').join("");
+        return '<svg class="scene" viewBox="0 0 600 330" role="img" aria-label="Bangjack berdiri di tangga satuan panjang bersama dua teman yang membawa meteran">' +
+          '<g transform="translate(540,52)"><g class="spin">' + ray + '</g><circle r="26" fill="#ffd54a"/><circle cx="-8" cy="-4" r="2.6" fill="#1f2a44"/><circle cx="8" cy="-4" r="2.6" fill="#1f2a44"/><path d="M-9 6Q0 14 9 6" stroke="#1f2a44" stroke-width="2.6" fill="none" stroke-linecap="round"/></g>' +
+          cloud(90, 50, 0) + cloud(330, 32, -5) +
+          '<ellipse cx="90" cy="262" rx="200" ry="62" fill="#8fd18a"/><rect y="262" width="600" height="68" fill="#4cb050"/><path d="M0 306Q300 276 600 306L600 330L0 330Z" fill="#ead29a"/>' +
+          T(122, 160, "Turun × 10, naik : 10", 17, "#1f4fbf") +
+          '<rect x="40" y="226" width="6" height="56" fill="#92400e"/><rect x="190" y="226" width="6" height="56" fill="#92400e"/><rect x="24" y="196" width="196" height="34" rx="4" fill="#fde047" stroke="#b45309" stroke-width="3"/>' + ticks + T(122, 224, "1 m = 100 cm", 13, "#1f2a44") +
+          st +
+          '<g transform="translate(268,40) scale(1.1)"><g class="jk">' + jackG("semangat") + "</g></g>" +
+          pp(70, 322, "#ef4444", 0, 1.45, '<circle cx="12" cy="-14" r="6" fill="#fde047" stroke="#b45309" stroke-width="2"/>', 0) +
+          pp(150, 322, "#16a34a", 3, 1.45, "", 0.4) +
+          "</svg>";
+      }
+      function gateHTML() {
+        const nt = [["8%", "♪", "#e5484d", "0s"], ["22%", "♫", "#2f6fed", "1.6s"], ["38%", "♪", "#2e9e48", "3.1s"], ["58%", "♫", "#f59e0b", "0.8s"], ["74%", "♪", "#8b5cf6", "2.4s"], ["90%", "♫", "#ec4899", "4.2s"]]
+          .map((n) => '<span class="nt" aria-hidden="true" style="left:' + n[0] + ";color:" + n[2] + ";animation-delay:" + n[3] + '">' + n[1] + "</span>").join("");
+        const chips = ["🪜 Tangga satuan", "✖️ Turun dikali 10", "➗ Naik dibagi 10", "🧮 Satuan campuran", "📖 Soal cerita"].map((t) => '<span class="chip2">' + t + "</span>").join("");
+        const trip = L.map((l) => '<div class="tile c"><div style="font-size:1.9rem">' + l.ic + "</div><b>" + l.nm + '</b><br><span class="meta">' + l.sub + "</span></div>").join("");
+        const st = [
+          ["🎬", "Tonton videonya dulu", "Video diputar langsung di halaman ini. Tekan ▶ untuk memutar. Matikan musik dengan tombol 🎵 saat menonton supaya suaranya jelas. Setelah masuk, kamu bisa menonton lagi lewat tombol 🎬 di bagian atas."],
+          ["🎒", "Pilih Mode Siswa", "Tulis namamu dan kode kelas dari Bapak atau Ibu Guru, lalu tekan Mulai Petualangan."],
+          ["🗺️", "Jelajahi peta petualangan", "Ada 3 level. Level berikutnya terbuka setelah soal level sebelumnya selesai."],
+          ["📖", "Baca materi bersama Bangjack", "Hafalkan tangga satuan: turun dikali 10, naik dibagi 10."],
+          ["✏️", "Jawab dengan teliti", "Siapkan kertas coretan. Untuk soal isian, tulis angkanya saja (boleh pakai titik, contoh 1.800). Jawaban yang sudah dikirim tidak bisa diganti."],
+          ["⭐", "Kumpulkan koin, bintang, dan lencana", "Boleh keluar kapan saja, progresmu tersimpan. Masuk lagi dengan nama dan kode kelas yang sama untuk lanjut."],
+        ].map((s, i) => '<li><span class="n">' + (i + 1) + '</span><span class="e" aria-hidden="true">' + s[0] + "</span><div><b>" + s[1] + "</b><p>" + s[2] + "</p></div></li>").join("");
+        return '<div class="card c hero">' + nt + '<div class="hero-top"><img class="logo" src="' + LOGO + '" alt="Logo SD Telkom Makassar"><span class="kick">📐 Matematika • Kelas IV SD</span><h1 class="ttl">HUBUNGAN ANTARSATUAN<em>PANJANG</em></h1><p class="sub">Bab 3 Pengukuran Panjang dan Berat<br>Petualangan Bangjack di Tangga Satuan</p><div class="chips">' + chips + "</div></div>" + sceneHero() + "</div>" +
+          '<div class="card c">' + bub("semangat", "Halo! Aku Bangjack, pemandu petualanganmu. Ayo kuasai tangga satuan panjang dan jadi Bintang Ukur! Siapa kamu hari ini?") +
+          '<div class="row" style="justify-content:center"><button class="btn go big" onclick="go(\'siswa\')">🎒 Mode Siswa</button><button class="btn warn big" onclick="go(\'guru\')">🧑‍🏫 Mode Guru</button></div>' + (DB.note ? '<p class="meta">' + DB.note + "</p>" : "") + "</div>" +
+          ytCard("🎬 Video Pembelajaran", "Tonton videonya sampai selesai, lalu mulai petualanganmu!") +
+          '<div class="card"><h2>📜 Petunjuk Bermain</h2><ol class="steps">' + st + '</ol><h3 style="margin-top:14px">Tiga level yang akan kamu lewati</h3><div class="grid">' + trip + '</div><div class="tile" style="margin-top:12px">🎵 <b>Musik:</b> tekan tombol 🎵 di pojok kanan bawah untuk menyalakan atau mematikan musik kapan saja.</div><p class="c" style="margin:10px 0 0"><button class="btn go big" onclick="go(\'siswa\')">🎒 Aku siap, ayo mulai!</button></p></div>';
+      }
+
+      /* ===== MUSIK LATAR (dibuat langsung oleh browser, tanpa file audio) ===== */
+      const MUS = {
+        ctx: null,
+        m: null,
+        nb: null,
+        on: false,
+        ever: false,
+        tm: null,
+        st: 0,
+        nt: 0,
+        wasOn: false,
+        BPM: 104,
+        F: [
+          261.63, 293.66, 329.63, 392, 440, 523.25, 587.33, 659.25, 783.99, 880,
+        ],
+        MEL: [
+          5, -1, 7, 8, 7, -1, 5, -1, 6, -1, 8, 9, 8, -1, 6, -1, 4, -1, 5, 6, 5,
+          -1, 4, -1, 5, 6, 7, -1, 6, 5, 3, -1, 5, -1, 7, 8, 9, -1, 8, 7, 8, -1,
+          7, 6, 7, -1, 5, -1, 6, 7, 8, -1, 7, 6, 5, -1, 5, -1, 3, -1, 5, -1, -1,
+          -1,
+        ],
+        ROOT: [130.81, 98, 110, 87.31, 130.81, 98, 87.31, 130.81],
+        start() {
+          try {
+            if (!this.ctx) {
+              const A = window.AudioContext || window.webkitAudioContext;
+              if (!A) return;
+              const c = (this.ctx = new A()),
+                k = c.createDynamicsCompressor(),
+                g = c.createGain();
+              g.gain.value = 0.5;
+              g.connect(k);
+              k.connect(c.destination);
+              this.m = g;
+              const b = (this.nb = c.createBuffer(
+                  1,
+                  Math.floor(c.sampleRate * 0.5),
+                  c.sampleRate,
+                )),
+                d = b.getChannelData(0);
+              for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+            }
+            this.ctx.resume();
+            this.ever = true;
+            if (!this.on) {
+              this.on = true;
+              this.st = 0;
+              this.nt = this.ctx.currentTime + 0.08;
+              this.tm = setInterval(() => this.tick(), 60);
+            }
+            document.body.classList.add("mon");
+          } catch (e) {}
+          this.ui();
+        },
+        stop() {
+          this.on = false;
+          clearInterval(this.tm);
+          this.tm = null;
+          document.body.classList.remove("mon");
+          this.ui();
+        },
+        toggle() {
+          this.on ? this.stop() : this.start();
+        },
+        ui() {
+          const b = document.getElementById("mbtn");
+          if (!b) return;
+          b.textContent = this.on
+            ? "🎵 Musik: Nyala"
+            : this.ever
+              ? "🔇 Musik: Mati"
+              : "🎵 Putar Musik";
+          b.setAttribute("aria-pressed", String(this.on));
+          b.classList.toggle("pulse", !this.ever);
+        },
+        tick() {
+          const c = this.ctx;
+          while (this.nt < c.currentTime + 0.25) {
+            this.play(this.st % 64, this.nt);
+            this.nt += 60 / this.BPM / 2;
+            this.st++;
+          }
+        },
+        play(s, t) {
+          const b = s % 8,
+            bar = s >> 3,
+            n = this.MEL[s];
+          if (n >= 0) {
+            this.pluck(this.F[n], t, 0.3, 0.18);
+            this.pluck(this.F[n], t + 0.13, 0.12, 0.08);
+          }
+          if (b === 0 || b === 4) {
+            this.bass(this.ROOT[bar], t, 1);
+            this.kick(t);
+          }
+          if (b === 2 || b === 6) {
+            this.bass(this.ROOT[bar] * 1.5, t, 0.55);
+            this.block(t);
+          }
+          this.hat(t, b % 2 ? 0.6 : 0.3);
+        },
+        env(o, t, v, d) {
+          const g = this.ctx.createGain();
+          g.gain.setValueAtTime(0.0001, t);
+          g.gain.exponentialRampToValueAtTime(v, t + 0.01);
+          g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+          o.connect(g);
+          g.connect(this.m);
+          o.start(t);
+          o.stop(t + d + 0.05);
+        },
+        osc(ty, f, t, v, d) {
+          const o = this.ctx.createOscillator();
+          o.type = ty;
+          o.frequency.value = f;
+          this.env(o, t, v, d);
+        },
+        pluck(f, t, v, d) {
+          this.osc("triangle", f, t, v, d + 0.35);
+          this.osc("sine", f * 2, t, v * 0.35, d + 0.2);
+        },
+        bass(f, t, k) {
+          this.osc("sine", f, t, 0.55 * k, 0.32);
+          this.osc("triangle", f * 2, t, 0.12 * k, 0.2);
+        },
+        kick(t) {
+          const o = this.ctx.createOscillator();
+          o.type = "sine";
+          o.frequency.setValueAtTime(150, t);
+          o.frequency.exponentialRampToValueAtTime(45, t + 0.12);
+          this.env(o, t, 0.7, 0.2);
+        },
+        block(t) {
+          this.osc("triangle", 950, t, 0.16, 0.07);
+        },
+        hat(t, v) {
+          const c = this.ctx,
+            s = c.createBufferSource(),
+            f = c.createBiquadFilter(),
+            g = c.createGain();
+          s.buffer = this.nb;
+          f.type = "highpass";
+          f.frequency.value = 7000;
+          g.gain.setValueAtTime(0.07 * v, t);
+          g.gain.exponentialRampToValueAtTime(0.0001, t + 0.05);
+          s.connect(f);
+          f.connect(g);
+          g.connect(this.m);
+          s.start(t);
+          s.stop(t + 0.06);
+        },
+      };
+      function firstTap(e) {
+        if (MUS.ever) return;
+        if (e.target && e.target.closest && e.target.closest("#mbtn")) return;
+        MUS.start();
+      }
+      document.addEventListener("click", firstTap, true);
+      document.addEventListener(
+        "keydown",
+        (e) => {
+          if (e.key === "Enter" || e.key === " ") firstTap(e);
+        },
+        true,
+      );
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+          MUS.wasOn = MUS.on;
+          if (MUS.on) MUS.stop();
+        } else if (MUS.wasOn) {
+          MUS.wasOn = false;
+          MUS.start();
+        }
+      });
+      window.addEventListener("blur", () =>
+        setTimeout(() => {
+          const a = document.activeElement;
+          if (a && a.tagName === "IFRAME" && MUS.on) MUS.stop();
+        }, 0),
+      );
+
+      /* ===== TAMBAHAN: VIDEO DI PETA, MATERI AWAL, DAN TOMBOL 🎬 ===== */
+      const _peta = VIEWS.peta, _mat = VIEWS.materi, _hud = hud;
+      VIEWS.peta = () => _peta() + ytCard("🎬 Video Pembelajaran", "Tonton lagi kapan saja tanpa keluar dari halaman ini.");
+      VIEWS.materi = () => _mat() + (V.p.l === 1 && V.p.i === 0 ? ytCard("🎬 Tonton Videonya Dulu", "Video diputar langsung di sini. Matikan musik 🎵 saat menonton.") : "");
+      hud = function () {
+        _hud();
+        const b = document.querySelector('#hud button[aria-label="Ke peta"]');
+        if (b) b.insertAdjacentHTML("afterend", ' <button class="btn ghost" style="min-height:34px;padding:4px 10px;margin:0" onclick="vid()" aria-label="Tonton video">🎬</button>');
+      };
+
+      DB.init().then(() => render());
+    </script>
+  </body>
+</html>
